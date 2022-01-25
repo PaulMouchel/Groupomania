@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Image from 'next/image'
 import bg from '../public/images/login-bg.jpg'
+import icon from '../public/images/logos/icon-left-font-monochrome-black.svg'
 
 const Login: NextPage = () => {
     return (
@@ -11,8 +12,10 @@ const Login: NextPage = () => {
             <Image src={bg} layout="fill" objectFit="cover"></Image>
             <a className={styles.credentials} href="https://www.pexels.com/fr-fr/photo/photo-de-personnes-faisant-des-coups-de-poing-3184430/">Photo de fauxels provenant de Pexels</a>
             <section className={styles.container}>
-                
                 <form className={styles.form}>
+                    <div className={styles.logo}>
+                        <Image  src={icon} width={300} height={80} />
+                    </div>
                     <h2>Se connecter</h2>
                     <TextField id="outlined-basic" label="Email" variant="outlined" />
                     <TextField id="outlined-basic" label="Mot de passe" variant="outlined" />
