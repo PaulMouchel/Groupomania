@@ -32,11 +32,25 @@
         
     }
     .action {
+        display: flex;
+        font-size: 1.4rem;
         .like {
 
         }
         .comment {
 
+        }
+        &>div {
+            width: 50%;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            &:hover {
+                background-color: #DDD;
+            }
         }
     }
 }

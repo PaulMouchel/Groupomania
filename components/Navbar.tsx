@@ -2,7 +2,7 @@ import { FC } from "react"
 import styles from '../styles/components/Navbar.module.scss'
 import Image from 'next/image'
 import icon from '../public/images/logos/icon-left-font-monochrome-white.svg'
-import HomeIcon from '../components/HomeIcon'
+import FaSolidHome from './icons/FaSolidHome'
 import Link from 'next/link'
 import man from '../public/images/users/man1.jpg'
 
@@ -14,7 +14,7 @@ const Navbar: FC = () => {
                 <Link href="/">
                     <a>
                         <div className={styles.home}>
-                            <HomeIcon/>
+                            <FaSolidHome/>
                         </div>
                     </a>
                 </Link>

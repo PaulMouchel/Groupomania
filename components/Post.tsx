@@ -4,6 +4,8 @@ import Image from 'next/image'
 import {DateTime} from "luxon"
 import Avatar from '@mui/material/Avatar'
 import Link from 'next/link'
+import IcRoundThumbUp from "./icons/IcRoundThumbUp"
+import IcBaselineComment from "./icons/IcBaselineComment"
 
 const Post: FC = () => {
 
@@ -32,12 +34,16 @@ const Post: FC = () => {
             <div className={styles.pics}>
                 
             </div>
+            <div className={styles.stats}>
+                <div className={styles.likers}></div>
+                <div className={styles.commenters}>commentaires</div>
+            </div>
             <div className={styles.action}>
                 <div className={styles.like}>
-
+                    <IcRoundThumbUp/>
                 </div>
                 <div className={styles.comment}>
-                    
+                    <IcBaselineComment/>
                 </div>
             </div>
         </div>
