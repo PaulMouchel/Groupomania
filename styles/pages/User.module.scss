@@ -1,0 +1,53 @@
+@import '../utils/variables';
+
+.container {
+    background-color: $color-secondary;
+    padding-bottom: 2rem;
+    .main {   
+        &__content {
+            border: solid 2px $color-primary;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            max-width: 900px;
+            margin: auto;
+            .header {
+                background-color: #FFF;
+                
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 2rem;
+                .userpic {
+                    border-radius: 99rem;
+                    overflow: hidden;
+                    border: solid 3px $color-secondary;
+                }
+                .username {
+                    font-size: 2rem;
+                }
+            }
+            .tabs {
+                background-color: #FFF;
+                display: flex;
+                padding: 0 1rem;
+                .tab {
+                    background-color: #FFF;
+                    padding: 1rem;
+                    cursor: pointer;
+                    width: 8rem;
+                    text-align: center;
+                    font-weight: 600;
+                    border-radius: 0.5rem 0.5rem 0 0;
+                    &.active {
+                        background-color: lighten($color: $color-primary, $amount: 30);
+                    }
+                }
+            }
+            .tab-content {
+                background-color: #FFF;
+                padding-bottom: 1rem;
+            }
+        }
+    }
+    
+}

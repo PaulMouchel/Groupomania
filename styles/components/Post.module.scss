@@ -3,7 +3,8 @@
 .container {
     max-width: 800px;
     margin: auto;
-    background-color: $light-gray;
+    background-color: #FFF;
+    border: solid 1px $light-gray;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     .header {
@@ -18,6 +19,10 @@
         }
         .sender {
             font-weight: 600;
+            color: #000;
+        }
+        .when {
+            font-size: 0.9rem;
         }
     }
     .text {
@@ -25,5 +30,13 @@
     }
     .pics {
         
+    }
+    .action {
+        .like {
+
+        }
+        .comment {
+
+        }
     }
 }

@@ -5,6 +5,12 @@
         &__content {
             // height: 4rem;
             background-color: $dark-gray;
+            .posts {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
         }
     }
 }
