@@ -6,6 +6,7 @@ import Avatar from '@mui/material/Avatar'
 import Link from 'next/link'
 import IcRoundThumbUp from "./icons/IcRoundThumbUp"
 import IcBaselineComment from "./icons/IcBaselineComment"
+import Comment from "./Comment"
 
 const Post: FC = () => {
 
@@ -46,6 +47,12 @@ const Post: FC = () => {
                     <IcBaselineComment/>
                 </div>
             </div>
+            <div className={styles.comments}>
+                <Comment/>
+                <Comment/>
+                <Comment/>
+            </div>
+            
         </div>
     )
 }

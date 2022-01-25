@@ -3,8 +3,7 @@
 .container {
     .main {
         &__content {
-            // height: 4rem;
-            background-color: $dark-gray;
+            background-color: $color-secondary;
             .posts {
                 display: flex;
                 flex-direction: column;
