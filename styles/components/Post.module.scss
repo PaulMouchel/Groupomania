@@ -1,0 +1,29 @@
+@import '../utils/variables';
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background-color: $light-gray;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    .header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-bottom: solid 1px $color-primary;
+        .sender-pic {
+            border-radius: 99rem;
+        }
+        .sender {
+            font-weight: 600;
+        }
+    }
+    .text {
+
+    }
+    .pics {
+        
+    }
+}

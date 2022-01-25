@@ -1,0 +1,10 @@
+@import '../utils/variables';
+
+.container {
+    .main {
+        &__content {
+            // height: 4rem;
+            background-color: $dark-gray;
+        }
+    }
+}
