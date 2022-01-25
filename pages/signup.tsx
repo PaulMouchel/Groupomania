@@ -1,11 +1,11 @@
 import { NextPage } from "next"
-import styles from '../styles/pages/login.module.scss'
+import styles from '../styles/pages/signup.module.scss'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Image from 'next/image'
 import bg from '../public/images/login-bg.jpg'
 
-const Login: NextPage = () => {
+const Signup: NextPage = () => {
     return (
         <main className={styles.main}>
             <Image src={bg} layout="fill" objectFit="cover"></Image>
@@ -13,15 +13,16 @@ const Login: NextPage = () => {
             <section className={styles.container}>
                 
                 <form className={styles.form}>
-                    <h2>Se connecter</h2>
+                    <h2>S'inscrire</h2>
+                    <TextField id="outlined-basic" label="Nom d'utilisateur" variant="outlined" />
                     <TextField id="outlined-basic" label="Email" variant="outlined" />
                     <TextField id="outlined-basic" label="Mot de passe" variant="outlined" />
-                    <Button variant="contained" size="large">Connexion</Button>
+                    <Button variant="contained" size="large">Inscription</Button>
                 </form>
             </section>
         </main>
     )
 }
 
-export default Login
+export default Signup
   
