@@ -27,7 +27,9 @@ const Navbar: FC = () => {
                         </div>
                     </a>
                 </Link>
-                <PowerSettingsNewIcon color="inherit"/>
+                <div className={styles.logout}>
+                    <PowerSettingsNewIcon/>
+                </div>
                 
             </div>
             

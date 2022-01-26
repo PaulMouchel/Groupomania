@@ -43,5 +43,18 @@
                 background-color: rgba(#FFF, 0.2);
             }
         }
+        .logout {
+            color: #FFF;
+            height: 3rem;
+            width: 3rem;
+            border-radius: 99rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(#FFF, 0.2);
+            }
+        }
     }
 }
