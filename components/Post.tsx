@@ -11,7 +11,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import CommentIcon from '@mui/icons-material/Comment';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import TextField from '@mui/material/TextField'
 
 const Post: FC = () => {
 
@@ -49,8 +50,8 @@ const Post: FC = () => {
                 <div className={styles.like}>
                     <ThumbUpIcon/>
                 </div>
-                <div className={styles.comment}>
-                    <CommentIcon/>
+                <div className={styles.dislike}>
+                    <ThumbDownIcon/>
                 </div>
             </div>
             <Accordion>
@@ -69,9 +70,17 @@ const Post: FC = () => {
                     </div>
                 </AccordionDetails>
             </Accordion>
-      
-      
-            
+            <div className={styles.add_comment}>
+                <Avatar alt="John Doe" src="/images/users/man1.jpg"/>
+                <TextField
+                    id="standard-textarea"
+                    label="Commenter"
+                    placeholder="Mon commentaire"
+                    multiline
+                    variant="standard"
+                    fullWidth
+                />
+            </div>
         </div>
     )
 }
