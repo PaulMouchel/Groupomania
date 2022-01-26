@@ -1,10 +1,14 @@
 @import '../utils/variables';
+@import '../utils/mixins';
 
 .container {
     background-color: #FFF;
     border: solid 1px $light-gray;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
     border-radius: 0.5rem;
+    @include tab {
+        padding: 0.5rem 1rem;
+    }
     .header {
         display: flex;
         align-items: center;
