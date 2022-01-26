@@ -2,14 +2,13 @@
 
 .container {
     .main {
+        background-color: $color-secondary;
         &__content {
-            background-color: $color-secondary;
-            .posts {
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
+            max-width: 800px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
     }
 }

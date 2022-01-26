@@ -4,9 +4,14 @@ import Image from 'next/image'
 import {DateTime} from "luxon"
 import Avatar from '@mui/material/Avatar'
 import Link from 'next/link'
-import IcRoundThumbUp from "./icons/IcRoundThumbUp"
-import IcBaselineComment from "./icons/IcBaselineComment"
 import Comment from "./Comment"
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import CommentIcon from '@mui/icons-material/Comment';
 
 const Post: FC = () => {
 
@@ -30,28 +35,42 @@ const Post: FC = () => {
                 </div>
             </div>
             <p className={styles.text}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <Typography>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </Typography>
             </p>
             <div className={styles.pics}>
                 
             </div>
             <div className={styles.stats}>
                 <div className={styles.likers}></div>
-                <div className={styles.commenters}>commentaires</div>
             </div>
             <div className={styles.action}>
                 <div className={styles.like}>
-                    <IcRoundThumbUp/>
+                    <ThumbUpIcon/>
                 </div>
                 <div className={styles.comment}>
-                    <IcBaselineComment/>
+                    <CommentIcon/>
                 </div>
             </div>
-            <div className={styles.comments}>
-                <Comment/>
-                <Comment/>
-                <Comment/>
-            </div>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                    >
+                    <Typography>3 commentaires</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <div className={styles.comments}>
+                        <Comment/>
+                        <Comment/>
+                        <Comment/>
+                    </div>
+                </AccordionDetails>
+            </Accordion>
+      
+      
             
         </div>
     )

@@ -1,0 +1,17 @@
+@import '../utils/variables';
+
+.container {
+    background-color: #FFF;
+    border: solid 1px $light-gray;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    .text {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .actions {
+
+    }
+    
+}

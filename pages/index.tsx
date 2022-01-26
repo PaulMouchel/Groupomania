@@ -20,12 +20,9 @@ const Home: NextPage = () => {
                 <Navbar/>
                 <div className={styles.main__content}>
                     <CreatePost/>
-                    <div className={styles.posts}>
-                        <Post/>
-                        <Post/>
-                        <Post/>
-                    </div>
-                  
+                    <Post/>
+                    <Post/>
+                    <Post/>
                 </div>
                 <Footer/>
 

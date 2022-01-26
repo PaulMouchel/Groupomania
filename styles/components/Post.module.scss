@@ -1,8 +1,6 @@
 @import '../utils/variables';
 
 .container {
-    max-width: 800px;
-    margin: auto;
     background-color: #FFF;
     border: solid 1px $light-gray;
     padding: 0.5rem 1rem;
@@ -31,6 +29,7 @@
     .action {
         display: flex;
         font-size: 1.4rem;
+        margin: 1rem 0;
         .like {
 
         }
