@@ -4,7 +4,7 @@ import Image from 'next/image'
 import icon from '../public/images/logos/icon-left-font-monochrome-white.svg'
 import FaSolidHome from './icons/FaSolidHome'
 import Link from 'next/link'
-import man from '../public/images/users/man1.jpg'
+import Avatar from '@mui/material/Avatar'
 
 const Navbar: FC = () => {
     return (
@@ -21,7 +21,7 @@ const Navbar: FC = () => {
                 <Link href="/users/1">
                     <a>
                         <div className={styles.profile}>
-                            <Image className={styles.userpic} src={man} width={35} height={35} />
+                            <Avatar alt="John Doe" src="/images/users/man1.jpg" sx={{ width: 35, height: 35 }} />
                             <span className={styles.username}>Paul Mouchel</span>
                         </div>
                     </a>
