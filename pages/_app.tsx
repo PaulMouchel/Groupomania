@@ -1,9 +1,25 @@
 import '../styles/vendors/normalize.css'
 import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#d1515a',
+        },
+        secondary: {
+            main: '#122441',
+        },
+    },
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+    return (
+        <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+        </ThemeProvider>
+    )
 }
 
 export default MyApp
