@@ -29,12 +29,12 @@ const Signup: NextPage = () => {
         return value.length > 8
     }
 
-    const handleSubmit = async (e) => {
-        
+    const handleSubmit = async (e:React.FormEvent) => {
+
         e.preventDefault()
-        const name = nameRef.current.value
-        const email = emailRef.current.value
-        const password = passwordRef.current.value
+        const name = nameRef?.current?.value
+        const email = emailRef?.current?.value
+        const password = passwordRef?.current?.value
 
         const newUser = { name, email, password }
         try {
