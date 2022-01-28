@@ -5,7 +5,7 @@ export default interface PostType {
     id: Number
     text: string
     imageUrl?: string
-    createdAt: Date
+    createdAt: string
     userId: Number
     user: UserType
     comments: CommentType[]

@@ -16,9 +16,9 @@ import TextField from '@mui/material/TextField'
 
 import PostType from "../types/Post"
 
-const Post: FC<PostType> = ({ text, user, comments }) => {
+const Post: FC<PostType> = ({ text, user, comments, createdAt }) => {
 
-    const test = DateTime.local().setLocale('fr').minus({days:8}).toRelative()
+    const when = DateTime.fromISO(createdAt).setLocale('fr').toRelative()
 
     return (
         <div className={styles.container}>
@@ -34,7 +34,7 @@ const Post: FC<PostType> = ({ text, user, comments }) => {
                             <div className={styles.sender}>{ user.name }</div>
                         </a>
                     </Link>
-                    <div className={styles.when}>{test}</div>
+                    <div className={styles.when}>{when}</div>
                 </div>
             </div>
             <div className={styles.text}>

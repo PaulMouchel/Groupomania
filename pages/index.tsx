@@ -38,6 +38,14 @@ const Home: NextPage = () => {
         fetchPosts()
     }, [])
 
+    const sortByDate = (a:PostType, b:PostType) => {
+        if (a.createdAt > b.createdAt)
+            return -1
+        if (a.createdAt < b.createdAt)
+            return 1
+        return 0
+    }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -50,7 +58,7 @@ const Home: NextPage = () => {
                 <Navbar/>
                 <div className={styles.main__content}>
                     <CreatePost posts={posts} setPosts={setPosts}/>
-                    { posts.map((post, index) => 
+                    { posts.sort(sortByDate).map((post, index) => 
                         <Post key={index} {...post}/>
                     )}
                 </div>
