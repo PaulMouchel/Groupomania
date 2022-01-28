@@ -6,8 +6,32 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import CreatePost from '../components/CreatePost'
 import Post from '../components/Post'
+import api from '../api/posts'
+import { useState, useEffect } from 'react'
 
 const Home: NextPage = () => {
+
+    const [ posts , setPosts ] = useState([])
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await api.get('/posts')
+                console.log(response.data)
+                setPosts(response.data)
+            } catch (error) {
+                if (error.response) {
+                    console.log(error.response.data)
+                    console.log(error.response.status)
+                    console.log(error.response.headers)
+                } else {
+                    console.log(`Error: ${error.message}`)
+                }
+            }
+        }
+        fetchPosts()
+    }, [])
+
     return (
         <div className={styles.container}>
             <Head>
@@ -20,9 +44,9 @@ const Home: NextPage = () => {
                 <Navbar/>
                 <div className={styles.main__content}>
                     <CreatePost/>
-                    <Post/>
-                    <Post/>
-                    <Post/>
+                    { posts.map((post, index) => 
+                        <Post key={index} {...post}/>
+                    )}
                 </div>
                 <Footer/>
 
