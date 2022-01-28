@@ -10,7 +10,11 @@ import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 const Navbar: FC = () => {
     return (
         <nav className={styles.navbar}>
-            <Image src={icon} width={150} height={50}></Image>
+            <Link href="/">
+                <a className={styles.logo}>
+                    <Image src={icon} width={150} height={50}></Image>
+                </a>
+            </Link>
             <div className={styles.actions}>
                 <Link href="/">
                     <a>

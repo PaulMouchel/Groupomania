@@ -1,5 +1,6 @@
 
 @import '../utils/variables';
+@import '../utils/mixins';
 
 .navbar {
     background-color: $color-secondary;
@@ -8,10 +9,25 @@
     align-items: center;
     height: 4rem;
     padding: 1rem;
+    // position: fixed;
+    // width: 100%;
+    .logo {
+        display: none;
+        align-items: center;
+        @include tab {
+            display: flex;
+        }
+    }
     .actions {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        width: 100%;
         gap: 1rem;
+        @include tab {
+            align-items: center;
+            justify-content: flex-end;
+        }
         .home {
             color: #FFF;
             font-size: 1.5rem;
@@ -21,6 +37,9 @@
             justify-content: center;
             align-items: center;
             border-radius: 0.5rem;
+            @include tab {
+                display: none;
+            }
             &:hover {
                 background-color: rgba(#FFF, 0.2);
             }
