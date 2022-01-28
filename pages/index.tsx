@@ -18,7 +18,6 @@ const Home: NextPage = () => {
         const fetchPosts = () => {
             api.get('/posts')
             .then((response) => {
-                console.log(response.data);
                 setPosts(response.data)
             })
             .catch((error:unknown) => {

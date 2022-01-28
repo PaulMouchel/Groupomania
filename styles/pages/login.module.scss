@@ -40,6 +40,9 @@
             @include tab {
                 width: 75%;
             }
+            &+p {
+                margin-top: 1rem;
+            }
         }
     }
 }

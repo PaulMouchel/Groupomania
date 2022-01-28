@@ -29,11 +29,9 @@ const User: NextPage = () => {
         const fetchUser = () => {
             api.get(`/users/${userId}`)
             .then((response) => {
-                console.log(response.data);
                 setUser(response.data)
             })
             .catch((error:unknown) => {
-                console.log(userId)
                 console.log(error)
             })
         }

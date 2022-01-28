@@ -5,6 +5,8 @@ import Button from '@mui/material/Button'
 import Image from 'next/image'
 import bg from '../public/images/login-bg.jpg'
 import icon from '../public/images/logos/icon-left-font-monochrome-black.svg'
+import Typography from '@mui/material/Typography'
+import Link from 'next/link'
 
 const Login: NextPage = () => {
     return (
@@ -21,6 +23,9 @@ const Login: NextPage = () => {
                     <TextField id="outlined-basic" label="Mot de passe" variant="outlined" />
                     <Button variant="contained" size="large">Connexion</Button>
                 </form>
+                <Typography>
+                    Pas encore de compte ? <Link href='/signup'><a>Inscrivez-vous !</a></Link>
+                </Typography>
             </section>
         </main>
     )
