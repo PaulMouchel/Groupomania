@@ -1,4 +1,5 @@
-import UserType from "./User";
+import UserType from "./User"
+import CommentType from "./Comment"
 
 export default interface PostType {
     id: Number
@@ -7,4 +8,5 @@ export default interface PostType {
     createdAt: Date
     userId: Number
     user: UserType
+    comments: CommentType[]
 }

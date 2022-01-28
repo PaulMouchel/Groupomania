@@ -16,7 +16,7 @@ import TextField from '@mui/material/TextField'
 
 import PostType from "../types/Post"
 
-const Post: FC<PostType> = ({ text, user }) => {
+const Post: FC<PostType> = ({ text, user, comments }) => {
 
     const test = DateTime.local().setLocale('fr').minus({days:8}).toRelative()
 
@@ -56,22 +56,24 @@ const Post: FC<PostType> = ({ text, user }) => {
                     <ThumbDownIcon/>
                 </div>
             </div>
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    >
-                    <Typography>3 commentaires</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <div className={styles.comments}>
-                        <Comment/>
-                        <Comment/>
-                        <Comment/>
-                    </div>
-                </AccordionDetails>
-            </Accordion>
+            { comments.length ? 
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                        >
+                        <Typography>{ comments.length } commentaire{comments.length > 1 && "s"}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <div className={styles.comments}>
+                            { comments.map((comment, index) => 
+                                <Comment key={index} {...comment}/>
+                            )}
+                        </div>
+                    </AccordionDetails>
+                </Accordion> : <></>
+            }
             <div className={styles.add_comment}>
                 <Avatar alt="John Doe" src="/images/users/man1.jpg"/>
                 <TextField
