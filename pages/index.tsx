@@ -8,10 +8,11 @@ import CreatePost from '../components/CreatePost'
 import Post from '../components/Post'
 import api from '../api/posts'
 import { useState, useEffect } from 'react'
+import PostType from '../types/Post'
 
 const Home: NextPage = () => {
 
-    const [ posts , setPosts ] = useState([])
+    const [ posts , setPosts ] = useState<PostType[]>([])
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -19,13 +20,18 @@ const Home: NextPage = () => {
                 const response = await api.get('/posts')
                 console.log(response.data)
                 setPosts(response.data)
-            } catch (error) {
+            } catch (error:unknown) {
+                
                 if (error.response) {
                     console.log(error.response.data)
                     console.log(error.response.status)
                     console.log(error.response.headers)
                 } else {
-                    console.log(`Error: ${error.message}`)
+                    if (typeof error === "string") {
+                        console.log(`Error: ${error}`)
+                    } else if (error instanceof Error) {
+                        console.log(`Error: ${(error as Error).message}`)
+                    }
                 }
             }
         }
@@ -43,7 +49,7 @@ const Home: NextPage = () => {
             <main className={styles.main}>
                 <Navbar/>
                 <div className={styles.main__content}>
-                    <CreatePost/>
+                    <CreatePost posts={posts} setPosts={setPosts}/>
                     { posts.map((post, index) => 
                         <Post key={index} {...post}/>
                     )}
