@@ -15,30 +15,20 @@ const Home: NextPage = () => {
     const [ posts , setPosts ] = useState<PostType[]>([])
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await api.get('/posts')
-                console.log(response.data)
+        const fetchPosts = () => {
+            api.get('/posts')
+            .then((response) => {
+                console.log(response.data);
                 setPosts(response.data)
-            } catch (error:unknown) {
-                
-                if (error.response) {
-                    console.log(error.response.data)
-                    console.log(error.response.status)
-                    console.log(error.response.headers)
-                } else {
-                    if (typeof error === "string") {
-                        console.log(`Error: ${error}`)
-                    } else if (error instanceof Error) {
-                        console.log(`Error: ${(error as Error).message}`)
-                    }
-                }
-            }
+            })
+            .catch((error:unknown) => {
+                console.log(error)
+            })
         }
         fetchPosts()
     }, [])
 
-    const sortByDate = (a:PostType, b:PostType) => {
+    const sortPostsByDate = (a:PostType, b:PostType) => {
         if (a.createdAt > b.createdAt)
             return -1
         if (a.createdAt < b.createdAt)
@@ -58,7 +48,7 @@ const Home: NextPage = () => {
                 <Navbar/>
                 <div className={styles.main__content}>
                     <CreatePost posts={posts} setPosts={setPosts}/>
-                    { posts.sort(sortByDate).map((post, index) => 
+                    { posts.sort(sortPostsByDate).map((post, index) => 
                         <Post key={index} {...post}/>
                     )}
                 </div>

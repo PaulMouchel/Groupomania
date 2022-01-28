@@ -1,3 +1,5 @@
+import PostType from "./Post";
+
 export default interface UserType {
     id: Number
     name: string
@@ -6,4 +8,5 @@ export default interface UserType {
     description?: string
     imageUrl?: string
     createdAt: Date
+    posts: PostType[]
 }

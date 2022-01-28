@@ -7,13 +7,38 @@ import Image from 'next/image'
 import man from '../../public/images/users/man1.jpg'
 import UserActivities from "../../components/UserActivities"
 import UserSettings from "../../components/UserSettings"
+import { useRouter } from "next/router";
+import UserType from "../../types/User"
+import api from '../../api/posts'
 
-import { useState } from 'react'
-
-
+import { useState, useEffect } from 'react'
 
 const User: NextPage = () => {
+    const router = useRouter()
+    const { query, isReady } = router
+    const { id } = query
+    const userId = Number(id)
+
     const [ tab, setTab ] = useState<Number>(0)
+    const [ user , setUser ] = useState<UserType | null>(null)
+
+    useEffect(() => {
+        if(!isReady) {
+            return
+        }
+        const fetchUser = () => {
+            api.get(`/users/${userId}`)
+            .then((response) => {
+                console.log(response.data);
+                setUser(response.data)
+            })
+            .catch((error:unknown) => {
+                console.log(userId)
+                console.log(error)
+            })
+        }
+        fetchUser()
+    }, [isReady])
 
     return (
         <div className={styles.container}>
@@ -28,18 +53,23 @@ const User: NextPage = () => {
                 <div className={styles.main__content}>
                     <div className={styles.header}>
                         <div className={styles.userpic}>
-                            <Image src={man} height={250} width={250} />
+                            <Image src={man} height={250} width={250} alt={`${user && user.name} pic`}/>
                         </div>
-                        <span className={styles.username}>Paul Mouchel</span>
+                        <span className={styles.username}>{user && user.name}</span>
                     </div>
-                    <div className={styles.tabs}>
-                        <div className={`${styles.tab} ${tab === 0 && styles.active}`} onClick={() => setTab(0)}>Activité</div>
-                        <div className={`${styles.tab} ${tab === 1 && styles.active}`} onClick={() => setTab(1)}>Paramètres</div>
-                    </div>
-                    <div className={styles['tab-content']}>
-                        { tab === 0 && <UserActivities/> }
-                        { tab === 0 && <UserSettings/> }
-                    </div>
+                    { user && 
+                        <>
+                            <div className={styles.tabs}>
+                                <div className={`${styles.tab} ${tab === 0 && styles.active}`} onClick={() => setTab(0)}>Activité</div>
+                                <div className={`${styles.tab} ${tab === 1 && styles.active}`} onClick={() => setTab(1)}>Paramètres</div>
+                            </div>
+                    
+                            <div className={styles['tab-content']}>
+                                { tab === 0 && <UserActivities user={user}/> }
+                                { tab === 0 && <UserSettings/> }
+                            </div>
+                        </>
+                    }
 
                   
                 </div>
