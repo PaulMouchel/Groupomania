@@ -23,6 +23,7 @@ const CreatePost: FC<CreatePostType> = ({ posts, setPosts}) => {
                 const response = await api.post('/posts', newPost)
                 const allPosts = [...posts, response.data]
                 setPosts(allPosts)
+                setText("")
             } catch (error:unknown) {
                 if (typeof error === "string") {
                     console.log(`Error: ${error}`)
@@ -45,6 +46,7 @@ const CreatePost: FC<CreatePostType> = ({ posts, setPosts}) => {
                     variant="standard"
                     fullWidth
                     onChange={handleTextChange}
+                    value={text}
                 />
             </div>
             <div className={styles.actions}>
