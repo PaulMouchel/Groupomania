@@ -9,7 +9,7 @@ import bg from '../public/images/login-bg.jpg'
 import icon from '../public/images/logos/icon-left-font-monochrome-black.svg'
 import Typography from '@mui/material/Typography'
 import Link from 'next/link'
-import api from '../api/posts'
+import api from '../api/axios'
 
 const Login: NextPage = () => {
 

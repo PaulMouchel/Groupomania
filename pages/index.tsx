@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import CreatePost from '../components/CreatePost'
 import Post from '../components/Post'
-import api from '../api/posts'
+import api from '../api/axios'
 import { useState, useEffect } from 'react'
 import PostType from '../types/Post'
 
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         const fetchPosts = () => {
             api.get('/posts', {
                 headers: {
-                    "authorization": localStorage.getItem("token")
+                    "authorization": localStorage.getItem("token") ||""
                 }
             })
             .then((response) => {

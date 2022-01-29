@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Avatar from '@mui/material/Avatar'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import api from '../api/posts'
+import api from '../api/axios'
 import CreatePostType from "../types/CreatePost"
 
 const CreatePost: FC<CreatePostType> = ({ posts, setPosts}) => {

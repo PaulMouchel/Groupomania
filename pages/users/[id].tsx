@@ -9,7 +9,7 @@ import UserActivities from "../../components/UserActivities"
 import UserSettings from "../../components/UserSettings"
 import { useRouter } from "next/router";
 import UserType from "../../types/User"
-import api from '../../api/posts'
+import api from '../../api/axios'
 
 import { useState, useEffect } from 'react'
 
@@ -29,7 +29,7 @@ const User: NextPage = () => {
         const fetchUser = () => {
             api.get(`/users/${userId}`, {
                 headers: {
-                    "authorization": localStorage.getItem("token")
+                    "authorization": localStorage.getItem("token") || ""
                 }
             })
             .then((response) => {
