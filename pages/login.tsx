@@ -59,10 +59,10 @@ const Login: NextPage = () => {
             if (!response.data.error) {
                 localStorage.setItem("token", `Bearer ${response.data.token}`);
                 router.push("/")
-              } else {
+            } else {
                 console.log(response.data.error)
                 setError(response.data.message)
-              }
+            }
         } catch (error:unknown) {
             if (typeof error === "string") {
                 console.log(`Error: ${error}`)

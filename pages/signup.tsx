@@ -1,17 +1,21 @@
 import { NextPage } from "next"
+import { useRouter } from 'next/router'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useRef, useState } from 'react'
-import styles from '../styles/pages/signup.module.scss'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import Image from 'next/image'
+import Typography from '@mui/material/Typography'
+import styles from '../styles/pages/signup.module.scss'
 import bg from '../public/images/signup-bg.jpg'
 import icon from '../public/images/logos/icon-left-font-monochrome-black.svg'
-import Typography from '@mui/material/Typography'
-import Link from 'next/link'
+
+
 import api from '../api/axios'
 
 const Signup: NextPage = () => {
 
+    const router = useRouter()
     const nameRef = useRef<HTMLInputElement>(null)
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
@@ -24,6 +28,7 @@ const Signup: NextPage = () => {
     const [ emailHelper, setEmailHelper ] = useState<string>("")
     const [ passwordHelper, setPasswordHelper ] = useState<string>("")
     const [ passwordConfirmationHelper, setPasswordConfirmationHelper ] = useState<string>("")
+    const [ error, setError ] = useState<string>("")
 
     const isValidName = (value:string) => {
         return value.length >= 3 && value.length < 100
@@ -102,11 +107,38 @@ const Signup: NextPage = () => {
         }
     }
 
+    const logUser = async (email:string, password:string) => {
+        const user = { email, password }
+        try {
+            const response = await api.post('/auth/login', user)
+            if (!response.data.error) {
+                localStorage.setItem("token", `Bearer ${response.data.token}`);
+                router.push("/")
+            } else {
+                console.log(response.data.error)
+                setError(response.data.message)
+            }
+        } catch (error:unknown) {
+            if (typeof error === "string") {
+                console.log(`Error: ${error}`)
+                setError(error)
+            } else if (error instanceof Error) {
+                console.log(`Error: ${(error as Error).message}`)
+                setError(error.message)
+            }
+        }
+    }
+
     const createUser = async (name:string, email:string, password:string) => {
         const newUser = { name, email, password }
         try {
             const response = await api.post('/auth/signup', newUser)
-            
+            if (!response.data.error) {
+                logUser(email, password)
+            } else {
+                console.log(response.data.error)
+                // setError(response.data.message)
+            }
         } catch (error:unknown) {
             if (typeof error === "string") {
                 console.log(`Error: ${error}`)
