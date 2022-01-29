@@ -16,7 +16,11 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         const fetchPosts = () => {
-            api.get('/posts')
+            api.get('/posts', {
+                headers: {
+                    "authorization": localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 setPosts(response.data)
             })

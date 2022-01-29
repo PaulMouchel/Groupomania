@@ -29,7 +29,6 @@ const Login: NextPage = () => {
         e.preventDefault()
         const email = emailRef?.current?.value || ""
         const password = passwordRef?.current?.value || ""
-
         if (isValidEmail(email)) {
             logUser(email, password)
         }
@@ -40,9 +39,10 @@ const Login: NextPage = () => {
         try {
             const response = await api.post('/auth/login', user)
             if (!response.data.error) {
-                localStorage.setItem("user", JSON.stringify(response.data.user));
+                localStorage.setItem("token", `Bearer ${response.data.token}`);
                 router.push("/")
               } else {
+                  console.log(response.data.error)
                 // setLoginError(response.data.message);
               }
         } catch (error:unknown) {
@@ -64,8 +64,8 @@ const Login: NextPage = () => {
                         <Image  src={icon} width={300} height={80} />
                     </div>
                     <h2>Se connecter</h2>
-                    <TextField id="email" type="email" label="Email" variant="outlined" />
-                    <TextField id="password" type="password" label="Mot de passe" variant="outlined" />
+                    <TextField id="email" type="email" label="Email" variant="outlined" inputRef={emailRef}/>
+                    <TextField id="password" type="password" label="Mot de passe" variant="outlined" inputRef={passwordRef}/>
                     <Button variant="contained" size="large" type="submit">Connexion</Button>
                 </form>
                 <Typography>

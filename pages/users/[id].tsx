@@ -27,7 +27,11 @@ const User: NextPage = () => {
             return
         }
         const fetchUser = () => {
-            api.get(`/users/${userId}`)
+            api.get(`/users/${userId}`, {
+                headers: {
+                    "authorization": localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 setUser(response.data)
             })
