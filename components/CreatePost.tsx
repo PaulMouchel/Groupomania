@@ -17,10 +17,15 @@ const CreatePost: FC<CreatePostType> = ({ posts, setPosts}) => {
 
     const handleSubmit = async (e:React.FormEvent) => {
         e.preventDefault()
+        const userId = Number(localStorage.getItem("userId"))
         if (text !== "") {
-            const newPost = { userId:1, text:text }
+            const newPost = { userId:userId, text:text }
             try {
-                const response = await api.post('/posts', newPost)
+                const response = await api.post('/posts', newPost, {
+                    headers: {
+                        "authorization": localStorage.getItem("token") ||""
+                    }
+                })
                 const allPosts = [...posts, response.data]
                 setPosts(allPosts)
                 setText("")

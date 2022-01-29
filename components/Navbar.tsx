@@ -1,3 +1,4 @@
+import { useRouter } from "next/router"
 import { FC } from "react"
 import styles from '../styles/components/Navbar.module.scss'
 import Image from 'next/image'
@@ -8,6 +9,14 @@ import Avatar from '@mui/material/Avatar'
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 
 const Navbar: FC = () => {
+
+    const router = useRouter()
+
+    const handleLogout = () => {
+        localStorage.clear()
+        router.push("/login")
+    }
+
     return (
         <nav className={styles.navbar}>
             <Link href="/">
@@ -31,7 +40,7 @@ const Navbar: FC = () => {
                         </div>
                     </a>
                 </Link>
-                <div className={styles.logout}>
+                <div className={styles.logout} onClick={handleLogout}>
                     <PowerSettingsNewIcon/>
                 </div>
                 

@@ -23,13 +23,13 @@ const Post: FC<PostType> = ({ text, user, comments, createdAt }) => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <Link href="/users/2">
+                <Link href={`/users/${user.id}`}>
                     <a>
                         <Avatar alt={ user.name } src="/images/users/man1.jpg" />
                     </a>
                 </Link>
                 <div>
-                    <Link href="/users/2">
+                    <Link href={`/users/${user.id}`}>
                         <a>
                             <div className={styles.sender}>{ user.name }</div>
                         </a>

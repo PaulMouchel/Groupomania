@@ -57,7 +57,8 @@ const Login: NextPage = () => {
         try {
             const response = await api.post('/auth/login', user)
             if (!response.data.error) {
-                localStorage.setItem("token", `Bearer ${response.data.token}`);
+                localStorage.setItem("token", `Bearer ${response.data.token}`)
+                localStorage.setItem("userId", response.data.userId)
                 router.push("/")
             } else {
                 console.log(response.data.error)
