@@ -7,7 +7,7 @@ import Image from 'next/image'
 import man from '../../public/images/users/man1.jpg'
 import UserActivities from "../../components/UserActivities"
 import UserSettings from "../../components/UserSettings"
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
 import UserType from "../../types/User"
 import api from '../../api/axios'
 
