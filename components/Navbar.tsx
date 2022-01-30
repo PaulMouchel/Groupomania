@@ -14,7 +14,7 @@ const Navbar: FC = () => {
 
     const router = useRouter()
 
-    const [ user , setUser ] = useState<UserType[]>([])
+    const [ user , setUser ] = useState<UserType | null>(null)
 
     useEffect(() => {
         const userId = localStorage.getItem("userId")
@@ -58,7 +58,7 @@ const Navbar: FC = () => {
                     <a>
                         <div className={styles.profile}>
                             <Avatar alt="John Doe" src="/images/users/man1.jpg" sx={{ width: 35, height: 35 }} />
-                            <span className={styles.username}>{user.name}</span>
+                            <span className={styles.username}>{user && user.name}</span>
                         </div>
                     </a>
                 </Link>

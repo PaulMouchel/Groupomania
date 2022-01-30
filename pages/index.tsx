@@ -2,8 +2,6 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/pages/Home.module.scss'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
 import CreatePost from '../components/CreatePost'
 import Post from '../components/Post'
 import api from '../api/axios'
@@ -48,15 +46,12 @@ const Home: NextPage = () => {
             </Head>
 
             <main className={styles.main}>
-                <Navbar/>
                 <div className={styles.main__content}>
                     <CreatePost posts={posts} setPosts={setPosts}/>
                     { posts.sort(sortPostsByDate).map((post, index) => 
                         <Post key={index} {...post}/>
                     )}
                 </div>
-                <Footer/>
-
             </main>
 
 

@@ -1,6 +1,4 @@
 import { NextPage } from "next"
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
 import styles from '../../styles/pages/User.module.scss'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -51,7 +49,6 @@ const User: NextPage = () => {
             </Head>
 
             <main className={styles.main}>
-                <Navbar/>
                 <div className={styles.main__content}>
                     <div className={styles.header}>
                         <div className={styles.userpic}>
@@ -75,8 +72,6 @@ const User: NextPage = () => {
 
                   
                 </div>
-                <Footer/>
-
             </main>
 
 

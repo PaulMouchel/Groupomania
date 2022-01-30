@@ -1,7 +1,8 @@
 import '../styles/vendors/normalize.css'
 import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import Layout from '../components/Layout'
 
 const theme = createTheme({
     palette: {
@@ -17,7 +18,9 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
         </ThemeProvider>
     )
 }
