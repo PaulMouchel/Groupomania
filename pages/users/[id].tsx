@@ -11,8 +11,7 @@ import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const User: NextPage = () => {
     const router = useRouter()
@@ -24,6 +23,7 @@ const User: NextPage = () => {
     const [ user , setUser ] = useState<UserType | null>(null)
     const [ currentUser , setCurrentUser ] = useState<UserType | null>(null)
     const [ isCurrentUser, setIsCurrentUser ] = useState<boolean>(false)
+    const descriptionRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
         const currentUserStr = localStorage.getItem("user")
@@ -45,6 +45,10 @@ const User: NextPage = () => {
             })
             .then((response) => {
                 setUser(response.data)
+                if (descriptionRef && descriptionRef.current) {
+                    descriptionRef.current.value = response.data.description
+                }
+                
             })
             .catch((error:unknown) => {
                 console.log(error)
@@ -60,6 +64,32 @@ const User: NextPage = () => {
             setIsCurrentUser(false)
         }
     }, [user, currentUser])
+
+    const changeDescription = async (e:React.FormEvent) => {
+        e.preventDefault()
+        if (currentUser) {
+            const userId = currentUser.id
+            const description = descriptionRef?.current?.value
+            if (description !== "") {
+                console.log(description)
+                const userUpdate = { description:description }
+                try {
+                    const response = await api.patch(`/users/${userId}`, userUpdate, {
+                        headers: {
+                            "authorization": localStorage.getItem("token") ||""
+                        }
+                    })
+                    localStorage.setItem("user", JSON.stringify(response.data))
+                } catch (error:unknown) {
+                    if (typeof error === "string") {
+                        console.log(`Error: ${error}`)
+                    } else if (error instanceof Error) {
+                        console.log(`Error: ${(error as Error).message}`)
+                    }
+                }
+            }
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -81,7 +111,7 @@ const User: NextPage = () => {
                         <>
                             <div className={styles.description}>
                                 { isCurrentUser ? 
-                                    <form>
+                                    <form onSubmit={(e:React.FormEvent) => changeDescription(e)}>
                                         <TextField
                                             id="description"
                                             label="Description"
@@ -89,8 +119,7 @@ const User: NextPage = () => {
                                             multiline
                                             variant="standard"
                                             fullWidth
-                                            // onChange={handleTextChange}
-                                            value={user.description}
+                                            inputRef={descriptionRef}
                                         />
                                         <div className={styles.actions}>
                                             <Button variant="contained" type="submit" >Modifier</Button>
@@ -111,8 +140,6 @@ const User: NextPage = () => {
                             </div>
                         </>
                     }
-
-                  
                 </div>
             </main>
 
