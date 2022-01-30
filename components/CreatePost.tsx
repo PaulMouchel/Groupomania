@@ -44,7 +44,7 @@ const CreatePost: FC<CreatePostType> = ({ posts, setPosts}) => {
             <div className={styles.text}>
                 <Avatar alt="John Doe" src="/images/users/man1.jpg" sx={{ width: 56, height: 56 }}/>
                 <TextField
-                    id="standard-textarea"
+                    id="create-post"
                     label="Quelque chose à dire ?"
                     placeholder="Salut à tous !"
                     multiline

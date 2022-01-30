@@ -2,12 +2,15 @@ import { NextPage } from "next"
 import styles from '../../styles/pages/User.module.scss'
 import Head from 'next/head'
 import Image from 'next/image'
-import man from '../../public/images/users/man1.jpg'
 import UserActivities from "../../components/UserActivities"
 import UserSettings from "../../components/UserSettings"
 import { useRouter } from 'next/router'
 import UserType from "../../types/User"
 import api from '../../api/axios'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 
 import { useState, useEffect } from 'react'
 
@@ -19,6 +22,16 @@ const User: NextPage = () => {
 
     const [ tab, setTab ] = useState<Number>(0)
     const [ user , setUser ] = useState<UserType | null>(null)
+    const [ currentUser , setCurrentUser ] = useState<UserType | null>(null)
+    const [ isCurrentUser, setIsCurrentUser ] = useState<boolean>(false)
+
+    useEffect(() => {
+        const currentUserStr = localStorage.getItem("user")
+        if (currentUserStr) {
+            const currentUser = JSON.parse(currentUserStr)
+            setCurrentUser(currentUser)
+        } 
+    }, [])
 
     useEffect(() => {
         if(!isReady) {
@@ -38,7 +51,15 @@ const User: NextPage = () => {
             })
         }
         fetchUser()
-    }, [isReady])
+    }, [router])
+
+    useEffect(() => {
+        if (user && currentUser) {
+            setIsCurrentUser(user.id === currentUser.id)
+        } else {
+            setIsCurrentUser(false)
+        }
+    }, [user, currentUser])
 
     return (
         <div className={styles.container}>
@@ -52,12 +73,33 @@ const User: NextPage = () => {
                 <div className={styles.main__content}>
                     <div className={styles.header}>
                         <div className={styles.userpic}>
-                            <Image src={man} height={250} width={250} alt={`${user && user.name} pic`}/>
+                            <Avatar alt={user ? user.name : "user pic"} src={user ? user.imageUrl : ""} sx={{ width: 250, height: 250 }} />
                         </div>
                         <span className={styles.username}>{user && user.name}</span>
                     </div>
                     { user && 
                         <>
+                            <div className={styles.description}>
+                                { isCurrentUser ? 
+                                    <form>
+                                        <TextField
+                                            id="description"
+                                            label="Description"
+                                            placeholder="Un mot sur vous ?"
+                                            multiline
+                                            variant="standard"
+                                            fullWidth
+                                            // onChange={handleTextChange}
+                                            value={user.description}
+                                        />
+                                        <div className={styles.actions}>
+                                            <Button variant="contained" type="submit" >Modifier</Button>
+                                        </div>
+                                    </form>
+                                    :
+                                    <Typography>{user.description}</Typography>
+                                }
+                            </div>
                             <div className={styles.tabs}>
                                 <div className={`${styles.tab} ${tab === 0 && styles.active}`} onClick={() => setTab(0)}>Activité</div>
                                 <div className={`${styles.tab} ${tab === 1 && styles.active}`} onClick={() => setTab(1)}>Paramètres</div>

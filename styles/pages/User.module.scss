@@ -10,9 +10,8 @@
             overflow: hidden;
             max-width: 900px;
             margin: auto;
+            background-color: #FFF;
             .header {
-                background-color: #FFF;
-                
                 display: flex;
                 align-items: center;
                 gap: 1rem;
@@ -21,17 +20,24 @@
                     border-radius: 99rem;
                     overflow: hidden;
                     border: solid 3px $color-secondary;
+                    cursor: pointer;
                 }
                 .username {
                     font-size: 2rem;
                 }
             }
+            .description {
+                padding: 2rem;
+                .actions {
+                    margin-top: 1rem;
+                    display: flex;
+                    justify-content: end;
+                }
+            }
             .tabs {
-                background-color: #FFF;
                 display: flex;
                 padding: 0 1rem;
                 .tab {
-                    background-color: #FFF;
                     padding: 1rem;
                     cursor: pointer;
                     width: 8rem;
