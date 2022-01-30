@@ -20,7 +20,6 @@
                     border-radius: 99rem;
                     overflow: hidden;
                     border: solid 3px $color-secondary;
-                    cursor: pointer;
                 }
                 .username {
                     font-size: 2rem;
@@ -33,6 +32,11 @@
                     display: flex;
                     justify-content: end;
                 }
+            }
+            .change {
+                padding: 0 2rem 2rem;
+                display: flex;
+                justify-content: end;
             }
             .tabs {
                 display: flex;
