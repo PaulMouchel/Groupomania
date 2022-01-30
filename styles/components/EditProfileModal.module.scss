@@ -1,0 +1,25 @@
+@import '../utils/variables';
+
+.view {
+    background-color: rgba(#000, $alpha: 0.5);
+    z-index: 10;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .container {
+        background-color: #FFF;
+        border: solid 2px $color-primary;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        .actions {
+            display: flex;
+            justify-content: end;
+            gap: 0.5rem;
+        }
+    }
+}
