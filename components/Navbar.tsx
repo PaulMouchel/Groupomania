@@ -7,31 +7,21 @@ import FaSolidHome from './icons/FaSolidHome'
 import Link from 'next/link'
 import Avatar from '@mui/material/Avatar'
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
-import api from '../api/axios'
 import UserType from "../types/User"
 
 const Navbar: FC = () => {
 
     const router = useRouter()
-
     const [ user , setUser ] = useState<UserType | null>(null)
 
     useEffect(() => {
-        const userId = localStorage.getItem("userId")
-        const fetchPosts = () => {
-            api.get(`/users/${userId}`, {
-                headers: {
-                    "authorization": localStorage.getItem("token") ||""
-                }
-            })
-            .then((response) => {
-                setUser(response.data)
-            })
-            .catch((error:unknown) => {
-                console.log(error)
-            })
-        }
-        fetchPosts()
+        const currentUserStr = localStorage.getItem("user")
+        if (currentUserStr) {
+            const currentUser = JSON.parse(currentUserStr)
+            setUser(currentUser)
+        } else {
+            router.push("/login")
+        } 
     }, [])
 
     const handleLogout = () => {
@@ -54,14 +44,16 @@ const Navbar: FC = () => {
                         </div>
                     </a>
                 </Link>
-                <Link href="/users/1">
-                    <a>
-                        <div className={styles.profile}>
-                            <Avatar alt="John Doe" src="/images/users/man1.jpg" sx={{ width: 35, height: 35 }} />
-                            <span className={styles.username}>{user && user.name}</span>
-                        </div>
-                    </a>
-                </Link>
+                { user && 
+                    <Link href={`/users/${user.id}`}>
+                        <a>
+                            <div className={styles.profile}>
+                                <Avatar alt={user.name} src={user.imageUrl} sx={{ width: 35, height: 35 }} />
+                                <span className={styles.username}>{user && user.name}</span>
+                            </div>
+                        </a>
+                    </Link>
+                }
                 <div className={styles.logout} onClick={handleLogout}>
                     <PowerSettingsNewIcon/>
                 </div>
