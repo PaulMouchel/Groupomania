@@ -1,13 +1,12 @@
 import { FC, useState, ChangeEvent } from "react"
 import styles from '../styles/components/WriteComment.module.scss'
-import Image from 'next/image'
 import Avatar from '@mui/material/Avatar'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import api from '../api/axios'
 import WriteCommentType from "../types/WriteComment"
 
-const WriteComment: FC<WriteCommentType> = ({ postId, comments, currentUser }) => {
+const WriteComment: FC<WriteCommentType> = ({ postId, comments, setComments, currentUser }) => {
 
     const [ text , setText ] = useState<string>("")
 
@@ -25,8 +24,9 @@ const WriteComment: FC<WriteCommentType> = ({ postId, comments, currentUser }) =
                         "authorization": localStorage.getItem("token") ||""
                     }
                 })
+                console.log(response.data)
                 const allComments = [...comments, response.data]
-                // setPosts(allComments)
+                setComments(allComments)
                 setText("")
             } catch (error:unknown) {
                 if (typeof error === "string") {
@@ -50,6 +50,7 @@ const WriteComment: FC<WriteCommentType> = ({ postId, comments, currentUser }) =
                     variant="standard"
                     fullWidth
                     onChange={handleTextChange}
+                    value = {text}
                 />
             </div>
             <div className={styles.actions}>

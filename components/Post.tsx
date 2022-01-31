@@ -16,11 +16,13 @@ import TextField from '@mui/material/TextField'
 import api from '../api/axios'
 import ReactionType from "../types/Reaction"
 import PostType from "../types/Post"
+import CommentType from "../types/Comment"
 import WriteComment from "./WriteComment"
 
 const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, currentUser }) => {
 
     const [ postReactions, setPostReactions ] = useState<ReactionType[]>(reactions)
+    const [ postComments, setPostComments ] = useState<CommentType[]>(comments)
     const quantityOfLikes = postReactions.filter(reaction => reaction.type === 'like').length
     const quantityOfDislikes = postReactions.filter(reaction => reaction.type === 'dislike').length
     const currentUserReaction = currentUser ? postReactions.filter(reaction => reaction.userId === currentUser.id)[0]?.type : null
@@ -141,18 +143,18 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
                     <ThumbDownIcon/>{ quantityOfDislikes > 0 && <span className={styles.quantity}>{ quantityOfDislikes }</span>}
                 </div>
             </div>
-            { comments.length ? 
+            { postComments.length ? 
                 <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                         >
-                        <Typography>{ comments.length } commentaire{comments.length > 1 && "s"}</Typography>
+                        <Typography>{ postComments.length } commentaire{postComments.length > 1 && "s"}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <div className={styles.comments}>
-                            { comments.map((comment, index) => 
+                            { postComments.map((comment, index) => 
                                 <Comment key={index} {...comment}/>
                             )}
                         </div>
@@ -160,7 +162,7 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
                 </Accordion> : <></>
             }
             { currentUser &&
-                <WriteComment postId={id} comments={comments} currentUser={currentUser}/>
+                <WriteComment postId={id} comments={postComments} setComments={setPostComments} currentUser={currentUser}/>
             }
         </div>
     )
