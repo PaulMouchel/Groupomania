@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { useState, useEffect, useRef } from 'react'
 import EditProfileModal from "../../components/EditProfileModal"
+import useLocalStorage from '../../hooks/useLocalStorage'
 
 const User: NextPage = () => {
     const router = useRouter()
@@ -22,18 +23,10 @@ const User: NextPage = () => {
 
     const [ tab, setTab ] = useState<Number>(0)
     const [ user , setUser ] = useState<UserType | null>(null)
-    const [ currentUser , setCurrentUser ] = useState<UserType | null>(null)
+    const [ currentUser , setCurrentUser ] = useLocalStorage<UserType | null>("user", null);
     const [ isCurrentUser, setIsCurrentUser ] = useState<boolean>(false)
     const [ modalOpen, setModalOpen ] = useState<boolean>(false)
     const descriptionRef = useRef<HTMLInputElement>(null)
-
-    useEffect(() => {
-        const currentUserStr = localStorage.getItem("user")
-        if (currentUserStr) {
-            const currentUser = JSON.parse(currentUserStr)
-            setCurrentUser(currentUser)
-        } 
-    }, [])
 
     useEffect(() => {
         if(!isReady || modalOpen) {
@@ -99,7 +92,7 @@ const User: NextPage = () => {
                             </div>
                     
                             <div className={styles['tab-content']}>
-                                { tab === 0 && <UserActivities user={user}/> }
+                                { currentUser && tab === 0 && <UserActivities user={user} currentUser={currentUser}/> }
                                 { tab === 0 && <UserSettings/> }
                             </div>
                         </>

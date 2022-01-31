@@ -4,7 +4,7 @@ import Post from './Post'
 import UserActivitiesType from '../types/UserActivities'
 import PostType from '../types/Post'
 
-const UserActivities: FC<UserActivitiesType> = ({ user }) => {
+const UserActivities: FC<UserActivitiesType> = ({ user, currentUser }) => {
 
     const sortPostsByDate = (a:PostType, b:PostType) => {
         if (a.createdAt > b.createdAt)
@@ -17,7 +17,7 @@ const UserActivities: FC<UserActivitiesType> = ({ user }) => {
     return (
         <div className={styles.container}>
             { user.posts.sort(sortPostsByDate).map((post, index) => 
-                <Post key={index} {...post} user={user} userId={user.id}/>
+                <Post key={index} {...post} user={user} userId={user.id} currentUser={currentUser}/>
             )}
         </div>
     )
