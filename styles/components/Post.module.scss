@@ -40,6 +40,9 @@
         .dislike {
 
         }
+        .active {
+            color: $color-primary;
+        }
         &>div {
             width: 50%;
             height: 2rem;

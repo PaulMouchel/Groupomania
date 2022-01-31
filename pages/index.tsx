@@ -50,7 +50,7 @@ const Home: NextPage = () => {
 
             <main className={styles.main}>
                 <div className={styles.main__content}>
-                    <CreatePost posts={posts} setPosts={setPosts}/>
+                    <CreatePost posts={posts} setPosts={setPosts} currentUser={currentUser}/>
                     { posts.sort(sortPostsByDate).map((post, index) => 
                         <Post key={index} {...post} currentUser={currentUser}/>
                     )}

@@ -13,12 +13,58 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import ThumbDownIcon from '@mui/icons-material/ThumbDown'
 import TextField from '@mui/material/TextField'
+import api from '../api/axios'
+import ReactionType from "../types/Reaction"
 
 import PostType from "../types/Post"
 
-const Post: FC<PostType> = ({ text, user, comments, createdAt, currentUser }) => {
+const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, currentUser }) => {
+
+    const quantityOfLikes = reactions.filter(reaction => reaction.type === 'like').length
+    const quantityOfDislikes = reactions.filter(reaction => reaction.type === 'dislike').length
+    const currentUserReaction = currentUser ? reactions.filter(reaction => reaction.userId === currentUser.id)[0]?.type : null
+
+    console.log(currentUserReaction)
 
     const when = DateTime.fromISO(createdAt).setLocale('fr').toRelative()
+
+    const reactToPost = async (reactionType:string) => {
+        if (currentUser) {
+            try {
+                const response = await api.get(`/posts/${id}/reactions`, {
+                    headers: {
+                        "authorization": localStorage.getItem("token") ||""
+                    }
+                })
+                const reactions:ReactionType[] = response.data
+                const likes = reactions.filter(reaction => reaction.type === 'like')
+                const dislikes = reactions.filter(reaction => reaction.type === 'dislike')
+                console.log(likes)
+            } catch (error) {
+                
+            }
+
+
+
+            // const newPost = { userId:currentUser.id, text:text }
+            // try {
+            //     const response = await api.post('/posts', newPost, {
+            //         headers: {
+            //             "authorization": localStorage.getItem("token") ||""
+            //         }
+            //     })
+            //     const allPosts = [...posts, response.data]
+            //     setPosts(allPosts)
+            //     setText("")
+            // } catch (error:unknown) {
+            //     if (typeof error === "string") {
+            //         console.log(`Error: ${error}`)
+            //     } else if (error instanceof Error) {
+            //         console.log(`Error: ${(error as Error).message}`)
+            //     }
+            // }
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -49,11 +95,11 @@ const Post: FC<PostType> = ({ text, user, comments, createdAt, currentUser }) =>
                 <div className={styles.likers}></div>
             </div>
             <div className={styles.action}>
-                <div className={styles.like}>
-                    <ThumbUpIcon/>
+                <div className={`${styles.like} ${currentUserReaction === 'like' && styles.active}`} onClick={() => reactToPost("like")}>
+                    <ThumbUpIcon/>{ quantityOfLikes }
                 </div>
-                <div className={styles.dislike}>
-                    <ThumbDownIcon/>
+                <div className={`${styles.dislike} ${currentUserReaction === 'dislike' && styles.active}`} onClick={() => reactToPost("dislike")}>
+                    <ThumbDownIcon/>{ quantityOfDislikes }
                 </div>
             </div>
             { comments.length ? 

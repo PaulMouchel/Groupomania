@@ -1,5 +1,6 @@
 import UserType from "./User"
 import CommentType from "./Comment"
+import ReactionType from "./Reaction"
 
 export default interface PostType {
     id: Number
@@ -10,4 +11,5 @@ export default interface PostType {
     user: UserType
     comments: CommentType[]
     currentUser: UserType | null
+    reactions: ReactionType[]
 }
