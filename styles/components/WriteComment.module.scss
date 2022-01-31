@@ -1,0 +1,16 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+.container {
+    .add_comment {
+        margin: 1rem 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .actions {
+        display: flex;
+        justify-content: end;
+        margin-bottom: 0.5rem;
+    }
+}

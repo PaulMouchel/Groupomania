@@ -3,7 +3,7 @@ import UserType from "./User";
 export default interface CommentType {
     id: Number
     text: string
-    createdAt: Date
+    createdAt: string
     userId: Number
     user: UserType
 }

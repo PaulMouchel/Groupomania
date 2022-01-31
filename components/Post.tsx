@@ -16,6 +16,7 @@ import TextField from '@mui/material/TextField'
 import api from '../api/axios'
 import ReactionType from "../types/Reaction"
 import PostType from "../types/Post"
+import WriteComment from "./WriteComment"
 
 const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, currentUser }) => {
 
@@ -159,17 +160,7 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
                 </Accordion> : <></>
             }
             { currentUser &&
-                <div className={styles.add_comment}>
-                    <Avatar alt={ currentUser.name } src={ currentUser.imageUrl }/>
-                    <TextField
-                        id="standard-textarea"
-                        label="Commenter"
-                        placeholder="Mon commentaire"
-                        multiline
-                        variant="standard"
-                        fullWidth
-                    />
-                </div>
+                <WriteComment postId={id} comments={comments} currentUser={currentUser}/>
             }
         </div>
     )

@@ -6,26 +6,26 @@ import Link from 'next/link'
 
 import CommentType from "../types/Comment"
 
-const Comment: FC<CommentType> = ({ text }) => {
+const Comment: FC<CommentType> = ({ user, createdAt, text }) => {
 
-    const test = DateTime.local().setLocale('fr').minus({days:8}).toRelative()
+    const when = DateTime.fromISO(createdAt).setLocale('fr').toRelative()
 
     return (
         <div className={styles.container}>
 
-            <Link href="/users/2">
+            <Link href={`/users/${user.id}`}>
                 <a>
-                    <Avatar alt="John Doe" src="/images/users/man1.jpg" />
+                    <Avatar alt={user.name} src={user.imageUrl} />
                 </a>
             </Link>
             <div className={styles.comment}>
                 <div className={styles.infos}>
-                    <Link href="/users/2">
+                    <Link href={`/users/${user.id}`}>
                         <a>
-                            <div className={styles.sender}>John Doe</div>
+                            <div className={styles.sender}>{user.name}</div>
                         </a>
                     </Link>
-                    <div className={styles.when}>{test}</div>
+                    <div className={styles.when}>{when}</div>
                 </div>
                 <p className={styles.text}>
                     { text }
