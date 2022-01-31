@@ -91,7 +91,6 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
         }
     }
 
-
     const handleReact = (reactionType:string) => {
         if (currentUser) {
 
@@ -102,28 +101,6 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
             } else {
                 changeReaction(reactionType)
             }
-     
-
-
-
-
-            // const newPost = { userId:currentUser.id, text:text }
-            // try {
-            //     const response = await api.post('/posts', newPost, {
-            //         headers: {
-            //             "authorization": localStorage.getItem("token") ||""
-            //         }
-            //     })
-            //     const allPosts = [...posts, response.data]
-            //     setPosts(allPosts)
-            //     setText("")
-            // } catch (error:unknown) {
-            //     if (typeof error === "string") {
-            //         console.log(`Error: ${error}`)
-            //     } else if (error instanceof Error) {
-            //         console.log(`Error: ${(error as Error).message}`)
-            //     }
-            // }
         }
     }
 
@@ -156,11 +133,11 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
                 <div className={styles.likers}></div>
             </div>
             <div className={styles.action}>
-                <div className={`${styles.like} ${currentUserReaction === 'like' && styles.active}`} onClick={() => handleReact("like")}>
-                    <ThumbUpIcon/>{ quantityOfLikes }
+                <div className={`${styles.reaction} ${currentUserReaction === 'like' && styles.active}`} onClick={() => handleReact("like")}>
+                    <ThumbUpIcon/>{ quantityOfLikes > 0 && <span className={styles.quantity}>{ quantityOfLikes }</span>}
                 </div>
-                <div className={`${styles.dislike} ${currentUserReaction === 'dislike' && styles.active}`} onClick={() => handleReact("dislike")}>
-                    <ThumbDownIcon/>{ quantityOfDislikes }
+                <div className={`${styles.reaction} ${currentUserReaction === 'dislike' && styles.active}`} onClick={() => handleReact("dislike")}>
+                    <ThumbDownIcon/>{ quantityOfDislikes > 0 && <span className={styles.quantity}>{ quantityOfDislikes }</span>}
                 </div>
             </div>
             { comments.length ? 

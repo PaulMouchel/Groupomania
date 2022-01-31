@@ -34,14 +34,17 @@
         display: flex;
         font-size: 1.4rem;
         margin: 1rem 0;
-        .like {
-
-        }
-        .dislike {
-
+        .reaction {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
         .active {
             color: $color-primary;
+        }
+        .quantity {
+            font-size: 1rem;
         }
         &>div {
             width: 50%;
