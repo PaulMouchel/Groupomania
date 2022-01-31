@@ -7,16 +7,19 @@ import Post from '../components/Post'
 import api from '../api/axios'
 import { useState, useEffect } from 'react'
 import PostType from '../types/Post'
+import UserType from '../types/User'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 const Home: NextPage = () => {
 
     const [ posts , setPosts ] = useState<PostType[]>([])
+    const [ currentUser , setCurrentUser ] = useLocalStorage<UserType | null>("user", null);
 
     useEffect(() => {
         const fetchPosts = () => {
             api.get('/posts', {
                 headers: {
-                    "authorization": localStorage.getItem("token") ||""
+                    "authorization": localStorage.getItem("token") || ""
                 }
             })
             .then((response) => {
@@ -49,7 +52,7 @@ const Home: NextPage = () => {
                 <div className={styles.main__content}>
                     <CreatePost posts={posts} setPosts={setPosts}/>
                     { posts.sort(sortPostsByDate).map((post, index) => 
-                        <Post key={index} {...post}/>
+                        <Post key={index} {...post} currentUser={currentUser}/>
                     )}
                 </div>
             </main>

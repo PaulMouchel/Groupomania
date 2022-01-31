@@ -9,6 +9,7 @@ import Avatar from '@mui/material/Avatar'
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
 import UserType from "../types/User"
 
+
 const Navbar: FC = () => {
 
     const router = useRouter()

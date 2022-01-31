@@ -9,4 +9,5 @@ export default interface PostType {
     userId: Number
     user: UserType
     comments: CommentType[]
+    currentUser: UserType | null
 }

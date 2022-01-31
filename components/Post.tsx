@@ -16,7 +16,7 @@ import TextField from '@mui/material/TextField'
 
 import PostType from "../types/Post"
 
-const Post: FC<PostType> = ({ text, user, comments, createdAt }) => {
+const Post: FC<PostType> = ({ text, user, comments, createdAt, currentUser }) => {
 
     const when = DateTime.fromISO(createdAt).setLocale('fr').toRelative()
 
@@ -25,7 +25,7 @@ const Post: FC<PostType> = ({ text, user, comments, createdAt }) => {
             <div className={styles.header}>
                 <Link href={`/users/${user.id}`}>
                     <a>
-                        <Avatar alt={ user.name } src="/images/users/man1.jpg" />
+                        <Avatar alt={ user.name } src={ user.imageUrl} />
                     </a>
                 </Link>
                 <div>
@@ -74,17 +74,19 @@ const Post: FC<PostType> = ({ text, user, comments, createdAt }) => {
                     </AccordionDetails>
                 </Accordion> : <></>
             }
-            <div className={styles.add_comment}>
-                <Avatar alt="John Doe" src="/images/users/man1.jpg"/>
-                <TextField
-                    id="standard-textarea"
-                    label="Commenter"
-                    placeholder="Mon commentaire"
-                    multiline
-                    variant="standard"
-                    fullWidth
-                />
-            </div>
+            { currentUser &&
+                <div className={styles.add_comment}>
+                    <Avatar alt={ currentUser.name } src={ currentUser.imageUrl }/>
+                    <TextField
+                        id="standard-textarea"
+                        label="Commenter"
+                        placeholder="Mon commentaire"
+                        multiline
+                        variant="standard"
+                        fullWidth
+                    />
+                </div>
+            }
         </div>
     )
 }

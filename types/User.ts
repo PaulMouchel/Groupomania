@@ -8,5 +8,5 @@ export default interface UserType {
     description?: string
     imageUrl?: string
     createdAt: Date
-    posts: PostType[]
+    posts?: PostType[]
 }
