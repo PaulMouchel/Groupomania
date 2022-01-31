@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import styles from '../styles/components/Post.module.scss'
 import Image from 'next/image'
 import {DateTime} from "luxon"
@@ -15,34 +15,95 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown'
 import TextField from '@mui/material/TextField'
 import api from '../api/axios'
 import ReactionType from "../types/Reaction"
-
 import PostType from "../types/Post"
 
 const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, currentUser }) => {
 
-    const quantityOfLikes = reactions.filter(reaction => reaction.type === 'like').length
-    const quantityOfDislikes = reactions.filter(reaction => reaction.type === 'dislike').length
-    const currentUserReaction = currentUser ? reactions.filter(reaction => reaction.userId === currentUser.id)[0]?.type : null
-
-    console.log(currentUserReaction)
-
+    const [ postReactions, setPostReactions ] = useState<ReactionType[]>(reactions)
+    const quantityOfLikes = postReactions.filter(reaction => reaction.type === 'like').length
+    const quantityOfDislikes = postReactions.filter(reaction => reaction.type === 'dislike').length
+    const currentUserReaction = currentUser ? postReactions.filter(reaction => reaction.userId === currentUser.id)[0]?.type : null
     const when = DateTime.fromISO(createdAt).setLocale('fr').toRelative()
 
     const reactToPost = async (reactionType:string) => {
         if (currentUser) {
+            const newReaction = { userId:currentUser.id, type:reactionType, postId:id }
             try {
-                const response = await api.get(`/posts/${id}/reactions`, {
+                const response = await api.post(`/reactions`, newReaction, {
                     headers: {
-                        "authorization": localStorage.getItem("token") ||""
+                        "authorization": localStorage.getItem("token") || ""
                     }
                 })
-                const reactions:ReactionType[] = response.data
-                const likes = reactions.filter(reaction => reaction.type === 'like')
-                const dislikes = reactions.filter(reaction => reaction.type === 'dislike')
-                console.log(likes)
-            } catch (error) {
-                
+                const allReactions = [...postReactions, response.data]
+                setPostReactions(allReactions)
+            } catch (error:unknown) {
+                if (typeof error === "string") {
+                    console.log(`Error: ${error}`)
+                } else if (error instanceof Error) {
+                    console.log(`Error: ${(error as Error).message}`)
+                }
             }
+        }
+    }
+
+    const cancelReaction = async () => {
+        if (currentUser) {
+            const reactionId = postReactions.filter(reaction => reaction.userId === currentUser.id)[0]?.id
+            try {
+                const response = await api.delete(`/reactions/${reactionId}`, {
+                    headers: {
+                        "authorization": localStorage.getItem("token") || ""
+                    }
+                })
+                const allReactions = postReactions.filter(reaction => reaction.userId !== currentUser.id)
+                setPostReactions(allReactions)
+            } catch (error:unknown) {
+                if (typeof error === "string") {
+                    console.log(`Error: ${error}`)
+                } else if (error instanceof Error) {
+                    console.log(`Error: ${(error as Error).message}`)
+                }
+            }
+        }
+    }
+
+    const changeReaction = async (reactionType:string) => {
+        if (currentUser) {
+            const reactionId = postReactions.filter(reaction => reaction.userId === currentUser.id)[0]?.id
+            const newReaction = { type:reactionType }
+            try {
+                const response = await api.patch(`/reactions/${reactionId}`, newReaction, {
+                    headers: {
+                        "authorization": localStorage.getItem("token") || ""
+                    }
+                })
+                let allReactions = [...postReactions]
+                const index = allReactions.findIndex(reaction => reaction.userId === currentUser.id)
+                allReactions[index].type = reactionType
+                setPostReactions(allReactions)
+            } catch (error:unknown) {
+                if (typeof error === "string") {
+                    console.log(`Error: ${error}`)
+                } else if (error instanceof Error) {
+                    console.log(`Error: ${(error as Error).message}`)
+                }
+            }
+        }
+    }
+
+
+    const handleReact = (reactionType:string) => {
+        if (currentUser) {
+
+            if (!currentUserReaction) {
+                reactToPost(reactionType)
+            } else if (currentUserReaction === reactionType) {
+                cancelReaction()
+            } else {
+                changeReaction(reactionType)
+            }
+     
+
 
 
 
@@ -95,10 +156,10 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
                 <div className={styles.likers}></div>
             </div>
             <div className={styles.action}>
-                <div className={`${styles.like} ${currentUserReaction === 'like' && styles.active}`} onClick={() => reactToPost("like")}>
+                <div className={`${styles.like} ${currentUserReaction === 'like' && styles.active}`} onClick={() => handleReact("like")}>
                     <ThumbUpIcon/>{ quantityOfLikes }
                 </div>
-                <div className={`${styles.dislike} ${currentUserReaction === 'dislike' && styles.active}`} onClick={() => reactToPost("dislike")}>
+                <div className={`${styles.dislike} ${currentUserReaction === 'dislike' && styles.active}`} onClick={() => handleReact("dislike")}>
                     <ThumbDownIcon/>{ quantityOfDislikes }
                 </div>
             </div>
