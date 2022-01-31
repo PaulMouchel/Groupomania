@@ -40,6 +40,11 @@ const Home: NextPage = () => {
         return 0
     }
 
+    const deletePost = (postId: Number) => {
+        let newPosts = posts.filter(post => post.id !== postId)
+        setPosts(newPosts)
+    }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -52,7 +57,7 @@ const Home: NextPage = () => {
                 <div className={styles.main__content}>
                     <CreatePost posts={posts} setPosts={setPosts} currentUser={currentUser}/>
                     { posts.sort(sortPostsByDate).map((post, index) => 
-                        <Post key={index} {...post} currentUser={currentUser}/>
+                        <Post key={index} {...post} currentUser={currentUser} deleteSelf={deletePost}/>
                     )}
                 </div>
             </main>

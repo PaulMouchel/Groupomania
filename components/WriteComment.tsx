@@ -24,7 +24,6 @@ const WriteComment: FC<WriteCommentType> = ({ postId, comments, setComments, cur
                         "authorization": localStorage.getItem("token") ||""
                     }
                 })
-                console.log(response.data)
                 const allComments = [...comments, response.data]
                 setComments(allComments)
                 setText("")

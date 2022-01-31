@@ -12,4 +12,5 @@ export default interface PostType {
     comments: CommentType[]
     currentUser: UserType | null
     reactions: ReactionType[]
+    deleteSelf: Function
 }

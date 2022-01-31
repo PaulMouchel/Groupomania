@@ -18,8 +18,13 @@ import ReactionType from "../types/Reaction"
 import PostType from "../types/Post"
 import CommentType from "../types/Comment"
 import WriteComment from "./WriteComment"
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import MenuItem from '@mui/material/MenuItem'
+import DeleteIcon from '@mui/icons-material/Delete'
 
-const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, currentUser }) => {
+import StyledMenu from "./StyledMenu"
+
+const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, currentUser, deleteSelf }) => {
 
     const [ postReactions, setPostReactions ] = useState<ReactionType[]>(reactions)
     const [ postComments, setPostComments ] = useState<CommentType[]>(comments)
@@ -27,6 +32,8 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
     const quantityOfDislikes = postReactions.filter(reaction => reaction.type === 'dislike').length
     const currentUserReaction = currentUser ? postReactions.filter(reaction => reaction.userId === currentUser.id)[0]?.type : null
     const when = DateTime.fromISO(createdAt).setLocale('fr').toRelative()
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+    const open = Boolean(anchorEl)
 
     const reactToPost = async (reactionType:string) => {
         if (currentUser) {
@@ -107,9 +114,41 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
         }
     }
 
+    const deleteComment = (commentId: Number) => {
+        let newComments = postComments.filter(comment => comment.id !== commentId)
+        setPostComments(newComments)
+    }
+
+    const handleDotsMenuClose = () => {
+        setAnchorEl(null)
+    }
+
+    const handleDotsMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget)
+    }
+
+    const handleDelete = async () => {
+        try {
+            const response = await api.delete(`/posts/${id}`, {
+                headers: {
+                    "authorization": localStorage.getItem("token") || ""
+                }
+            })
+            setAnchorEl(null)
+            deleteSelf(id)
+        } catch (error:unknown) {
+            if (typeof error === "string") {
+                console.log(`Error: ${error}`)
+            } else if (error instanceof Error) {
+                console.log(`Error: ${(error as Error).message}`)
+            }
+        }
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
+                <div className={styles.main}>
                 <Link href={`/users/${user.id}`}>
                     <a>
                         <Avatar alt={ user.name } src={ user.imageUrl} />
@@ -123,6 +162,28 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
                     </Link>
                     <div className={styles.when}>{when}</div>
                 </div>
+                </div>
+                { currentUser && currentUser.id === user.id && 
+                    <>
+                        <div onClick={handleDotsMenuClick} className={styles.more}>
+                            <MoreVertIcon/>
+                        </div>
+                        <StyledMenu
+                            id="demo-customized-menu"
+                            MenuListProps={{
+                            'aria-labelledby': 'demo-customized-button',
+                            }}
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleDotsMenuClose}
+                        >
+                            <MenuItem onClick={handleDelete} disableRipple>
+                                <DeleteIcon />
+                                Supprimer
+                            </MenuItem>
+                        </StyledMenu>
+                    </>
+                }
             </div>
             <div className={styles.text}>
                 <Typography>
@@ -131,9 +192,6 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
             </div>
             <div className={styles.pics}>
                 
-            </div>
-            <div className={styles.stats}>
-                <div className={styles.likers}></div>
             </div>
             <div className={styles.action}>
                 <div className={`${styles.reaction} ${currentUserReaction === 'like' && styles.active}`} onClick={() => handleReact("like")}>
@@ -154,8 +212,8 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
                     </AccordionSummary>
                     <AccordionDetails>
                         <div className={styles.comments}>
-                            { postComments.map((comment, index) => 
-                                <Comment key={index} {...comment}/>
+                            { currentUser && postComments.map((comment, index) => 
+                                <Comment key={index} {...comment} currentUser={currentUser} deleteSelf={deleteComment}/>
                             )}
                         </div>
                     </AccordionDetails>
