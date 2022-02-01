@@ -1,4 +1,4 @@
-import UserType from "../types/User"
+import UserType from "../types/UserType"
 import CommentType from "../types/CommentType"
 
 export default interface IComment {

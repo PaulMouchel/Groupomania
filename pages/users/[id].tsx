@@ -5,7 +5,7 @@ import Image from 'next/image'
 import UserActivities from "../../components/UserActivities"
 import UserSettings from "../../components/UserSettings"
 import { useRouter } from 'next/router'
-import UserType from "../../types/User"
+import UserType from "../../types/UserType"
 import api from '../../api/axios'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
@@ -92,7 +92,7 @@ const User: NextPage = () => {
                             </div>
                     
                             <div className={styles['tab-content']}>
-                                { currentUser && tab === 0 && <UserActivities user={user} currentUser={currentUser}/> }
+                                { currentUser && tab === 0 && <UserActivities user={user} setUser={setUser} currentUser={currentUser}/> }
                                 { tab === 0 && <UserSettings/> }
                             </div>
                         </>

@@ -3,6 +3,6 @@ import { Dispatch, SetStateAction } from "react"
 
 export default interface IUserActivities {
     user: UserType
-    setUser: Dispatch<SetStateAction<UserType[]>>
+    setUser: Dispatch<SetStateAction<UserType | null>>
     currentUser: UserType
 }

@@ -3,6 +3,7 @@ import styles from '../styles/components/UserActivities.module.scss'
 import Post from './Post'
 import IUserActivities from '../interfaces/IUserActivities'
 import PostType from '../types/PostType'
+import UserType from '../types/UserType'
 
 const UserActivities: FC<IUserActivities> = ({ user, currentUser, setUser }) => {
 
@@ -15,8 +16,8 @@ const UserActivities: FC<IUserActivities> = ({ user, currentUser, setUser }) => 
     }
 
     const deletePost = (postId: Number) => {
-        const newPosts = user.posts.filter(post => post.id !== postId)
-        const newUser = user
+        const newPosts:PostType[] = user.posts.filter(post => post.id !== postId)
+        const newUser:UserType = user
         newUser.posts = [...newPosts]
         setUser({...newUser})
     }
@@ -25,7 +26,7 @@ const UserActivities: FC<IUserActivities> = ({ user, currentUser, setUser }) => 
         const newPosts:PostType[] = [...user.posts]
         const index:number = newPosts.findIndex(existingPost => existingPost.id === post.id)
         newPosts[index] = post
-        const newUser = user
+        const newUser:UserType = user
         newUser.posts = [...newPosts]
         setUser({...newUser})
     }
