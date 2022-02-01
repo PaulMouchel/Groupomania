@@ -10,11 +10,22 @@
         align-items: flex-start;
         gap: 1rem;
     }
+    .image {
+        position: relative;
+        height: 20rem;
+        margin: 1rem 0;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
     .actions {
         margin-top: 1rem;
         margin-bottom: 0.5rem;
         display: flex;
         justify-content: flex-end;
+        gap:1rem;
+        .upload-button {
+            display: none;
+        }
     }
     
 }

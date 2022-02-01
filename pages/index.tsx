@@ -7,7 +7,7 @@ import Post from '../components/Post'
 import api from '../api/axios'
 import { useState, useEffect } from 'react'
 import PostType from '../types/PostType'
-import UserType from '../types/User'
+import UserType from '../types/UserType'
 import useLocalStorage from '../hooks/useLocalStorage'
 
 const Home: NextPage = () => {
@@ -23,6 +23,7 @@ const Home: NextPage = () => {
                 }
             })
             .then((response) => {
+                console.log("reponse:", response)
                 setPosts(response.data)
             })
             .catch((error:unknown) => {

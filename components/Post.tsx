@@ -25,7 +25,7 @@ import StyledMenu from "./StyledMenu"
 
 const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
 
-    const { id, text, user, comments, reactions, createdAt } = data
+    const { id, text, imageUrl, user, comments, reactions, createdAt } = data
     const quantityOfLikes = reactions.filter(reaction => reaction.type === 'like').length
     const quantityOfDislikes = reactions.filter(reaction => reaction.type === 'dislike').length
     const currentUserReaction = currentUser ? reactions.filter(reaction => reaction.userId === currentUser.id)[0]?.type : null
@@ -202,9 +202,11 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
                     { text }
                 </Typography>
             </div>
-            <div className={styles.pics}>
-                
-            </div>
+            { imageUrl && 
+                <div className={styles.image}>
+                    <Image src={imageUrl} layout="fill" objectFit="cover" /> 
+                </div>
+            }
             <div className={styles.action}>
                 <div className={`${styles.reaction} ${currentUserReaction === 'like' && styles.active}`} onClick={() => handleReact("like")}>
                     <ThumbUpIcon/>{ quantityOfLikes > 0 && <span className={styles.quantity}>{ quantityOfLikes }</span>}

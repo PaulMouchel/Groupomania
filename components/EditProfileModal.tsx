@@ -46,6 +46,7 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
         post.append("name", name)
         post.append("description", description)
         post.append("image", file)
+        
         try {
             const response = await api.patch(`/users/${userId}`, post, {
                 headers: {
