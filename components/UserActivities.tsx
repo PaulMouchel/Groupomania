@@ -2,7 +2,7 @@ import { FC } from 'react'
 import styles from '../styles/components/UserActivities.module.scss'
 import Post from './Post'
 import UserActivitiesType from '../types/UserActivities'
-import PostType from '../types/Post'
+import PostType from '../types/PostType'
 
 const UserActivities: FC<UserActivitiesType> = ({ user, currentUser }) => {
 

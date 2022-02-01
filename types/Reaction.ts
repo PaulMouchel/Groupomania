@@ -1,5 +1,5 @@
 import UserType from "./User"
-import PostType from "./Post"
+import PostType from "./PostType"
 
 export default interface ReactionType {
     id: Number

@@ -6,7 +6,7 @@ import CreatePost from '../components/CreatePost'
 import Post from '../components/Post'
 import api from '../api/axios'
 import { useState, useEffect } from 'react'
-import PostType from '../types/Post'
+import PostType from '../types/PostType'
 import UserType from '../types/User'
 import useLocalStorage from '../hooks/useLocalStorage'
 
@@ -41,9 +41,18 @@ const Home: NextPage = () => {
     }
 
     const deletePost = (postId: Number) => {
-        let newPosts = posts.filter(post => post.id !== postId)
-        setPosts(newPosts)
+        const newPosts = posts.filter(post => post.id !== postId)
+        setPosts([...newPosts])
     }
+
+    const updatePost = (post:PostType) => {
+        const newPosts:PostType[] = [...posts]
+        const index:number = newPosts.findIndex(existingPost => existingPost.id === post.id)
+        newPosts[index] = post
+        setPosts([...newPosts])
+    }
+
+
 
     return (
         <div className={styles.container}>
@@ -57,7 +66,7 @@ const Home: NextPage = () => {
                 <div className={styles.main__content}>
                     <CreatePost posts={posts} setPosts={setPosts} currentUser={currentUser}/>
                     { posts.sort(sortPostsByDate).map((post, index) => 
-                        <Post key={index} {...post} currentUser={currentUser} deleteSelf={deletePost}/>
+                        <Post key={JSON.stringify(post)} data={post} currentUser={currentUser} deletePost={deletePost} updatePost={updatePost}/>
                     )}
                 </div>
             </main>

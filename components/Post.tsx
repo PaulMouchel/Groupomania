@@ -12,11 +12,10 @@ import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import ThumbDownIcon from '@mui/icons-material/ThumbDown'
-import TextField from '@mui/material/TextField'
 import api from '../api/axios'
-import ReactionType from "../types/Reaction"
-import PostType from "../types/Post"
-import CommentType from "../types/Comment"
+import IPost from "../interfaces/IPost"
+import PostType from "../types/PostType"
+import CommentType from "../types/CommentType"
 import WriteComment from "./WriteComment"
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import MenuItem from '@mui/material/MenuItem'
@@ -24,13 +23,12 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 import StyledMenu from "./StyledMenu"
 
-const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, currentUser, deleteSelf }) => {
+const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
 
-    const [ postReactions, setPostReactions ] = useState<ReactionType[]>(reactions)
-    const [ postComments, setPostComments ] = useState<CommentType[]>(comments)
-    const quantityOfLikes = postReactions.filter(reaction => reaction.type === 'like').length
-    const quantityOfDislikes = postReactions.filter(reaction => reaction.type === 'dislike').length
-    const currentUserReaction = currentUser ? postReactions.filter(reaction => reaction.userId === currentUser.id)[0]?.type : null
+    const { id, text, user, comments, reactions, createdAt } = data
+    const quantityOfLikes = reactions.filter(reaction => reaction.type === 'like').length
+    const quantityOfDislikes = reactions.filter(reaction => reaction.type === 'dislike').length
+    const currentUserReaction = currentUser ? reactions.filter(reaction => reaction.userId === currentUser.id)[0]?.type : null
     const when = DateTime.fromISO(createdAt).setLocale('fr').toRelative()
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
@@ -44,8 +42,9 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
                         "authorization": localStorage.getItem("token") || ""
                     }
                 })
-                const allReactions = [...postReactions, response.data]
-                setPostReactions(allReactions)
+                const updatedPost:PostType = {...data}
+                updatedPost.reactions = [...reactions, response.data]
+                updatePost(updatedPost)
             } catch (error:unknown) {
                 if (typeof error === "string") {
                     console.log(`Error: ${error}`)
@@ -58,15 +57,17 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
 
     const cancelReaction = async () => {
         if (currentUser) {
-            const reactionId = postReactions.filter(reaction => reaction.userId === currentUser.id)[0]?.id
+            const reactionId = reactions.filter(reaction => reaction.userId === currentUser.id)[0]?.id
             try {
                 const response = await api.delete(`/reactions/${reactionId}`, {
                     headers: {
                         "authorization": localStorage.getItem("token") || ""
                     }
                 })
-                const allReactions = postReactions.filter(reaction => reaction.userId !== currentUser.id)
-                setPostReactions(allReactions)
+                const allReactions = reactions.filter(reaction => reaction.userId !== currentUser.id)
+                const updatedPost:PostType = {...data}
+                updatedPost.reactions = [...allReactions]
+                updatePost(updatedPost)
             } catch (error:unknown) {
                 if (typeof error === "string") {
                     console.log(`Error: ${error}`)
@@ -79,7 +80,7 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
 
     const changeReaction = async (reactionType:string) => {
         if (currentUser) {
-            const reactionId = postReactions.filter(reaction => reaction.userId === currentUser.id)[0]?.id
+            const reactionId = reactions.filter(reaction => reaction.userId === currentUser.id)[0]?.id
             const newReaction = { type:reactionType }
             try {
                 const response = await api.patch(`/reactions/${reactionId}`, newReaction, {
@@ -87,10 +88,12 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
                         "authorization": localStorage.getItem("token") || ""
                     }
                 })
-                let allReactions = [...postReactions]
+                let allReactions = [...reactions]
                 const index = allReactions.findIndex(reaction => reaction.userId === currentUser.id)
                 allReactions[index].type = reactionType
-                setPostReactions(allReactions)
+                const updatedPost:PostType = {...data}
+                updatedPost.reactions = [...allReactions]
+                updatePost(updatedPost)
             } catch (error:unknown) {
                 if (typeof error === "string") {
                     console.log(`Error: ${error}`)
@@ -115,8 +118,17 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
     }
 
     const deleteComment = (commentId: Number) => {
-        let newComments = postComments.filter(comment => comment.id !== commentId)
-        setPostComments(newComments)
+        const newComments = comments.filter(comment => comment.id !== commentId)
+        const updatedPost:PostType = {...data}
+        updatedPost.comments = [...newComments]
+        updatePost(updatedPost)
+    }
+
+    const writeComment = (comment:CommentType) => {
+        const newComments = [...comments, comment]
+        const updatedPost:PostType = {...data}
+        updatedPost.comments = [...newComments]
+        updatePost(updatedPost)
     }
 
     const handleDotsMenuClose = () => {
@@ -135,7 +147,7 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
                 }
             })
             setAnchorEl(null)
-            deleteSelf(id)
+            deletePost(id)
         } catch (error:unknown) {
             if (typeof error === "string") {
                 console.log(`Error: ${error}`)
@@ -201,26 +213,26 @@ const Post: FC<PostType> = ({ id, text, user, comments, reactions, createdAt, cu
                     <ThumbDownIcon/>{ quantityOfDislikes > 0 && <span className={styles.quantity}>{ quantityOfDislikes }</span>}
                 </div>
             </div>
-            { postComments.length ? 
+            { comments.length ? 
                 <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                         >
-                        <Typography>{ postComments.length } commentaire{postComments.length > 1 && "s"}</Typography>
+                        <Typography>{ comments.length } commentaire{comments.length > 1 && "s"}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <div className={styles.comments}>
-                            { currentUser && postComments.map((comment, index) => 
-                                <Comment key={index} {...comment} currentUser={currentUser} deleteSelf={deleteComment}/>
+                            { currentUser && comments.map((comment, index) => 
+                                <Comment key={index} data={comment} currentUser={currentUser} deleteSelf={deleteComment}/>
                             )}
                         </div>
                     </AccordionDetails>
                 </Accordion> : <></>
             }
             { currentUser &&
-                <WriteComment postId={id} comments={postComments} setComments={setPostComments} currentUser={currentUser}/>
+                <WriteComment postId={id} writeComment={writeComment} currentUser={currentUser}/>
             }
         </div>
     )

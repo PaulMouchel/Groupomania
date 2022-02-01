@@ -4,9 +4,9 @@ import Avatar from '@mui/material/Avatar'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import api from '../api/axios'
-import WriteCommentType from "../types/WriteComment"
+import IWriteComment from "../interfaces/IWriteComment"
 
-const WriteComment: FC<WriteCommentType> = ({ postId, comments, setComments, currentUser }) => {
+const WriteComment: FC<IWriteComment> = ({ postId, writeComment, currentUser }) => {
 
     const [ text , setText ] = useState<string>("")
 
@@ -24,8 +24,7 @@ const WriteComment: FC<WriteCommentType> = ({ postId, comments, setComments, cur
                         "authorization": localStorage.getItem("token") ||""
                     }
                 })
-                const allComments = [...comments, response.data]
-                setComments(allComments)
+                writeComment(response.data)
                 setText("")
             } catch (error:unknown) {
                 if (typeof error === "string") {

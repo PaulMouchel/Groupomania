@@ -1,3 +1,4 @@
+import PostType from "./PostType";
 import UserType from "./User";
 
 export default interface CommentType {
@@ -6,6 +7,6 @@ export default interface CommentType {
     createdAt: string
     userId: Number
     user: UserType
-    currentUser: UserType
-    deleteSelf: Function
+    postId: Number
+    post: PostType
 }

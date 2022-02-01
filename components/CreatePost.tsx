@@ -5,9 +5,9 @@ import Avatar from '@mui/material/Avatar'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import api from '../api/axios'
-import CreatePostType from "../types/CreatePost"
+import ICreatePost from "../interfaces/ICreatePost"
 
-const CreatePost: FC<CreatePostType> = ({ posts, setPosts, currentUser }) => {
+const CreatePost: FC<ICreatePost> = ({ posts, setPosts, currentUser }) => {
 
     const [ text , setText ] = useState<string>("")
 

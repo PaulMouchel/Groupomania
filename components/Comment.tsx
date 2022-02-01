@@ -9,14 +9,16 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 import StyledMenu from "./StyledMenu"
 
-import CommentType from "../types/Comment"
+import CommentType from "../types/CommentType"
+import IComment from '../interfaces/IComment'
 
 import api from '../api/axios'
 
-const Comment: FC<CommentType> = ({ id, user, createdAt, text, currentUser, deleteSelf }) => {
+const Comment: FC<IComment> = ({ data, currentUser, deleteSelf }) => {
 
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+    const { id, user, createdAt, text } = data
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+    const open = Boolean(anchorEl)
     const when = DateTime.fromISO(createdAt).setLocale('fr').toRelative()
 
     const handleClose = () => {
@@ -43,7 +45,6 @@ const Comment: FC<CommentType> = ({ id, user, createdAt, text, currentUser, dele
                 console.log(`Error: ${(error as Error).message}`)
             }
         }
-        
     }
 
     return (
