@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
-import PostType from "../types/Post";
-import UserType from "../types/User";
+import { Dispatch, SetStateAction } from "react"
+import PostType from "../types/PostType"
+import UserType from "../types/User"
 
 export default interface ICreatePost {
     posts: PostType[]

@@ -1,7 +1,7 @@
-import UserType from "./User"
+import UserType from "./UserType"
 import PostType from "./PostType"
 
-export default interface ReactionType {
+type ReactionType = {
     id: Number
     type: string
     createdAt: Date
@@ -10,3 +10,5 @@ export default interface ReactionType {
     postId: Number
     post: PostType
 }
+
+export default ReactionType

@@ -1,8 +1,8 @@
-import UserType from "./User"
-import CommentType from "./Comment"
-import ReactionType from "./Reaction"
+import UserType from "./UserType"
+import CommentType from "./CommentType"
+import ReactionType from "./ReactionType"
 
-export default interface PostType {
+type PostType = {
     id: Number
     text: string
     imageUrl?: string
@@ -12,3 +12,5 @@ export default interface PostType {
     comments: CommentType[]
     reactions: ReactionType[]
 }
+
+export default PostType

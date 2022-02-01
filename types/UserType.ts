@@ -1,6 +1,6 @@
-import PostType from "./Post";
+import PostType from "./PostType";
 
-export default interface UserType {
+type UserType = {
     id: Number
     name: string
     email: string
@@ -10,3 +10,5 @@ export default interface UserType {
     createdAt: Date
     posts: PostType[]
 }
+
+export default UserType

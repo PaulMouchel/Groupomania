@@ -1,7 +1,7 @@
 import PostType from "./PostType";
-import UserType from "./User";
+import UserType from "./UserType";
 
-export default interface CommentType {
+type CommentType = {
     id: Number
     text: string
     createdAt: string
@@ -10,3 +10,5 @@ export default interface CommentType {
     postId: Number
     post: PostType
 }
+
+export default CommentType
