@@ -1,4 +1,4 @@
-import UserType from "../types/User"
+import UserType from "../types/UserType"
 import PostType from "../types/PostType"
 
 export default interface IPost {

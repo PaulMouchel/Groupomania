@@ -1,4 +1,4 @@
-import UserType from "../types/User";
+import UserType from "../types/UserType";
 
 export default interface IWriteComment {
     postId: Number

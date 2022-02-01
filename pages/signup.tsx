@@ -12,6 +12,7 @@ import icon from '../public/images/logos/icon-left-font-monochrome-black.svg'
 
 
 import api from '../api/axios'
+import { useCurrentUser } from '../components/context/context'
 
 const Signup: NextPage = () => {
 
@@ -29,6 +30,7 @@ const Signup: NextPage = () => {
     const [ passwordHelper, setPasswordHelper ] = useState<string>("")
     const [ passwordConfirmationHelper, setPasswordConfirmationHelper ] = useState<string>("")
     const [ error, setError ] = useState<string>("")
+    const context = useCurrentUser()
 
     const isValidName = (value:string) => {
         return value.length >= 3 && value.length < 100
@@ -113,7 +115,8 @@ const Signup: NextPage = () => {
             const response = await api.post('/auth/login', user)
             if (!response.data.error) {
                 localStorage.setItem("token", `Bearer ${response.data.token}`)
-                localStorage.setItem("userId", response.data.userId)
+                localStorage.setItem("user", response.data.user)
+                context?.setCurrentUser(response.data.user)
                 router.push("/")
             } else {
                 console.log(response.data.error)

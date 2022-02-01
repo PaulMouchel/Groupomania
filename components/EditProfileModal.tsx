@@ -6,12 +6,14 @@ import TextField from '@mui/material/TextField'
 import Avatar from '@mui/material/Avatar'
 import { useEffect, useRef } from 'react'
 import api from '../api/axios'
-import EditModalProfileType from '../types/EditProfileModal'
+import EditModalProfileType from '../interfaces/IEditProfileModal'
+import { useCurrentUser } from './context/context'
 
 const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
 
     const descriptionRef = useRef<HTMLInputElement>(null)
     const nameRef = useRef<HTMLInputElement>(null)
+    const context = useCurrentUser()
 
     useEffect(() => {
         if (descriptionRef && descriptionRef.current && nameRef && nameRef.current && user) {
@@ -35,6 +37,7 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
                 }
             })
             localStorage.setItem("user", JSON.stringify(response.data))
+            context?.setCurrentUser(response.data)
             closeModal()
         } catch (error:unknown) {
             if (typeof error === "string") {

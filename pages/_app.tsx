@@ -3,6 +3,7 @@ import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Layout from '../components/Layout'
+import { CurrentUserContextProvider } from '../components/context/context'
 
 const theme = createTheme({
     palette: {
@@ -18,9 +19,11 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <ThemeProvider theme={theme}>
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
+            <CurrentUserContextProvider>
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            </CurrentUserContextProvider>
         </ThemeProvider>
     )
 }

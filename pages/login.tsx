@@ -11,6 +11,7 @@ import icon from '../public/images/logos/icon-left-font-monochrome-black.svg'
 import Typography from '@mui/material/Typography'
 import Link from 'next/link'
 import api from '../api/axios'
+import { useCurrentUser } from '../components/context/context'
 
 const Login: NextPage = () => {
 
@@ -20,6 +21,7 @@ const Login: NextPage = () => {
     const [ emailError, setEmailError ] = useState<boolean>(false)
     const [ emailHelper, setEmailHelper ] = useState<string>("")
     const [ error, setError ] = useState<string>("")
+    const context = useCurrentUser()
 
     useEffect(() => {
         if (error) {
@@ -58,8 +60,8 @@ const Login: NextPage = () => {
             const response = await api.post('/auth/login', user)
             if (!response.data.error) {
                 localStorage.setItem("token", `Bearer ${response.data.token}`)
-                // localStorage.setItem("userId", response.data.userId)
                 localStorage.setItem("user", response.data.user)
+                context?.setCurrentUser(response.data.user)
                 router.push("/")
             } else {
                 console.log(response.data.error)
