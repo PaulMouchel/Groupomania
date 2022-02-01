@@ -1,10 +1,10 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import styles from '../styles/components/EditProfileModal.module.scss'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Avatar from '@mui/material/Avatar'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import api from '../api/axios'
 import EditModalProfileType from '../interfaces/IEditProfileModal'
 import { useCurrentUser } from './context/context'
@@ -13,6 +13,7 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
 
     const descriptionRef = useRef<HTMLInputElement>(null)
     const nameRef = useRef<HTMLInputElement>(null)
+    const [ imageUrl, setImageUrl ] = useState<string>(user.imageUrl || "")
     const context = useCurrentUser()
 
     useEffect(() => {
@@ -21,6 +22,19 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
             descriptionRef.current.value = user.description || ""
         }
     }, [])
+
+    
+    const changeImage = (e:React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const files = Array.from(e.target.files)
+            const selectedFile = files[0]
+            const url = URL.createObjectURL(selectedFile);
+            setImageUrl(url)
+        } else {
+            setImageUrl("")
+        }
+        
+    }
 
     const changeData = async (e:React.FormEvent) => {
         e.preventDefault()
@@ -55,8 +69,8 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
                     <form className={styles.form} onSubmit={(e:React.FormEvent) => changeData(e)}>
                         <div className={styles.image}>
                             <label className={styles.label}>
-                                <input className={styles['image-input']} type="file" accept="image/png, image/jpeg" multiple={false}  />
-                                <Avatar alt={user.name} src={user.imageUrl} sx={{ width: 250, height: 250 }} />
+                                <input className={styles['image-input']} type="file" accept="image/png, image/jpeg" multiple={false} onChange={changeImage} />
+                                <Avatar alt={user.name} src={imageUrl} sx={{ width: 250, height: 250 }} />
                             </label>
                         </div>
                         <TextField
