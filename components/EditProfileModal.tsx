@@ -23,7 +23,6 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
             descriptionRef.current.value = user.description || ""
         }
     }, [])
-
     
     const changeImage = (e:React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -34,7 +33,6 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
         } else {
             setImageUrl("")
         }
-        
     }
 
     const changeData = async (e:React.FormEvent) => {
