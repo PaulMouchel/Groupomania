@@ -52,17 +52,13 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
         <div className={styles.view}>
             <ClickAwayListener onClickAway={() => closeModal()}>
                 <div className={styles.container}>
-
-                    <div className={styles.header}>
-                        <div className={styles.userpic}>
-                            <Avatar alt={user.name} src={user.imageUrl} sx={{ width: 250, height: 250 }} />
-                        </div>
-
-                        
-                    </div>
-                    
-
                     <form className={styles.form} onSubmit={(e:React.FormEvent) => changeData(e)}>
+                        <div className={styles.image}>
+                            <label className={styles.label}>
+                                <input className={styles['image-input']} type="file" accept="image/png, image/jpeg" multiple={false}  />
+                                <Avatar alt={user.name} src={user.imageUrl} sx={{ width: 250, height: 250 }} />
+                            </label>
+                        </div>
                         <TextField
                             id="name"
                             label="Nom"
