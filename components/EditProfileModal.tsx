@@ -13,6 +13,7 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
 
     const descriptionRef = useRef<HTMLInputElement>(null)
     const nameRef = useRef<HTMLInputElement>(null)
+    const fileRef = useRef<HTMLInputElement>(null)
     const [ imageUrl, setImageUrl ] = useState<string>(user.imageUrl || "")
     const context = useCurrentUser()
 
@@ -38,14 +39,17 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
 
     const changeData = async (e:React.FormEvent) => {
         e.preventDefault()
-
         const userId = user.id
-        const description = descriptionRef?.current?.value
-        const name = nameRef?.current?.value
-
-        const userUpdate = { description:description, name:name }
+        const description = descriptionRef?.current?.value || ""
+        const name = nameRef?.current?.value || ""
+        const files = fileRef?.current?.files || ""
+        const file = files && files[0]
+        const post = new FormData()
+        post.append("name", name)
+        post.append("description", description)
+        post.append("image", file)
         try {
-            const response = await api.patch(`/users/${userId}`, userUpdate, {
+            const response = await api.patch(`/users/${userId}`, post, {
                 headers: {
                     "authorization": localStorage.getItem("token") ||""
                 }
@@ -69,7 +73,7 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
                     <form className={styles.form} onSubmit={(e:React.FormEvent) => changeData(e)}>
                         <div className={styles.image}>
                             <label className={styles.label}>
-                                <input className={styles['image-input']} type="file" accept="image/png, image/jpeg" multiple={false} onChange={changeImage} />
+                                <input className={styles['image-input']} type="file" accept="image/png, image/jpeg" multiple={false} onChange={changeImage} ref={fileRef} />
                                 <Avatar alt={user.name} src={imageUrl} sx={{ width: 250, height: 250 }} />
                             </label>
                         </div>
