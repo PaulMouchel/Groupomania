@@ -6,9 +6,8 @@ import Link from 'next/link'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import MenuItem from '@mui/material/MenuItem'
 import DeleteIcon from '@mui/icons-material/Delete'
-
 import StyledMenu from "./StyledMenu"
-
+import EditIcon from '@mui/icons-material/Edit'
 import CommentType from "../types/CommentType"
 import IComment from '../interfaces/IComment'
 
@@ -83,6 +82,10 @@ const Comment: FC<IComment> = ({ data, currentUser, deleteSelf }) => {
                         open={open}
                         onClose={handleClose}
                     >
+                        <MenuItem disableRipple>
+                            <EditIcon />
+                            Modifier (en construction)
+                        </MenuItem>
                         <MenuItem onClick={handleDelete} disableRipple>
                             <DeleteIcon />
                             Supprimer
