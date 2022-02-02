@@ -20,8 +20,9 @@ import WriteComment from "./WriteComment"
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import MenuItem from '@mui/material/MenuItem'
 import DeleteIcon from '@mui/icons-material/Delete'
-
+import EditIcon from '@mui/icons-material/Edit'
 import StyledMenu from "./StyledMenu"
+import Modal from './Modal'
 
 const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
 
@@ -31,6 +32,7 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
     const currentUserReaction = currentUser ? reactions.filter(reaction => reaction.userId === currentUser.id)[0]?.type : null
     const when = DateTime.fromISO(createdAt).setLocale('fr').toRelative()
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+    const [ modalOpen, setModalOpen ] = useState<boolean>(false)
     const open = Boolean(anchorEl)
 
     const reactToPost = async (reactionType:string) => {
@@ -166,8 +168,22 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
         }
     }
 
+    const openModal = () => {
+        setAnchorEl(null)
+        setModalOpen(true)
+    }
+
+    const closeModal = () => {
+        setModalOpen(false)
+    }
+
     return (
         <div className={styles.container}>
+            { modalOpen && 
+                <Modal closeModal={closeModal}>
+                    {/* <EditComment comment={data} closeModal={closeModal} updateSelf={updateSelf}/>  */}
+                </Modal>
+            }
             <div className={styles.header}>
                 <div className={styles.main}>
                 <Link href={`/users/${user.id}`}>
@@ -198,6 +214,10 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
                             open={open}
                             onClose={handleDotsMenuClose}
                         >
+                            <MenuItem  onClick={openModal} disableRipple>
+                                <EditIcon/>
+                                Modifier
+                            </MenuItem>
                             <MenuItem onClick={handleDelete} disableRipple>
                                 <DeleteIcon />
                                 Supprimer
