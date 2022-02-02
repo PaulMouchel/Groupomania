@@ -84,12 +84,12 @@ const CreatePost: FC<ICreatePost> = ({ posts, setPosts, currentUser }) => {
                 </div>
             }
             <div className={styles.actions}>
-            <label htmlFor="icon-button-file">
-                <input className={styles['upload-button']} accept="image/*" id="icon-button-file" type="file" onChange={changeImage}/>
-                <IconButton color="primary" aria-label="upload picture" component="span" >
-                    <PhotoCamera />
-                </IconButton>
-            </label>
+                <label htmlFor="icon-button-file">
+                    <input className={styles['upload-button']} accept="image/*" id="icon-button-file" type="file" onChange={changeImage}/>
+                    <IconButton color="primary" aria-label="upload picture" component="span" >
+                        <PhotoCamera />
+                    </IconButton>
+                </label>
                 <Button variant="contained" type="submit" >Publier</Button>
             </div>
         </form>

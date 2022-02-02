@@ -23,6 +23,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import StyledMenu from "./StyledMenu"
 import Modal from './Modal'
+import EditPost from "./EditPost"
 
 const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
 
@@ -181,7 +182,8 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
         <div className={styles.container}>
             { modalOpen && 
                 <Modal closeModal={closeModal}>
-                    {/* <EditComment comment={data} closeModal={closeModal} updateSelf={updateSelf}/>  */}
+                    <EditPost post={data} closeModal={closeModal}/>
+                    {/* updateSelf={updateSelf}/>  */}
                 </Modal>
             }
             <div className={styles.header}>
