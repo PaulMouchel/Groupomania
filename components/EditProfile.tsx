@@ -1,15 +1,14 @@
 import React, { FC } from 'react'
-import styles from '../styles/components/EditProfileModal.module.scss'
-import ClickAwayListener from '@mui/material/ClickAwayListener'
+import styles from '../styles/components/EditProfile.module.scss'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Avatar from '@mui/material/Avatar'
 import { useEffect, useRef, useState } from 'react'
 import api from '../api/axios'
-import EditModalProfileType from '../interfaces/IEditProfileModal'
+import IEditProfile from '../interfaces/IEditProfile'
 import { useCurrentUser } from './context/context'
 
-const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
+const EditProfile: FC<IEditProfile> = ({ user, closeModal }) => {
 
     const descriptionRef = useRef<HTMLInputElement>(null)
     const nameRef = useRef<HTMLInputElement>(null)
@@ -66,43 +65,39 @@ const EditProfileModal: FC<EditModalProfileType> = ({ user, closeModal }) => {
     }
 
     return (
-        <div className={styles.view}>
-            <ClickAwayListener onClickAway={() => closeModal()}>
-                <div className={styles.container}>
-                    <form className={styles.form} onSubmit={(e:React.FormEvent) => changeData(e)}>
-                        <div className={styles.image}>
-                            <label className={styles.label}>
-                                <input className={styles['image-input']} type="file" accept="image/png, image/jpeg" multiple={false} onChange={changeImage} ref={fileRef} />
-                                <Avatar alt={user.name} src={imageUrl} sx={{ width: 250, height: 250 }} />
-                            </label>
-                        </div>
-                        <TextField
-                            id="name"
-                            label="Nom"
-                            placeholder="Votre nom"
-                            variant="standard"
-                            fullWidth
-                            inputRef={nameRef}
-                        />
-                        <TextField
-                            id="description"
-                            label="Description"
-                            placeholder="Un mot sur vous ?"
-                            multiline
-                            variant="standard"
-                            fullWidth
-                            inputRef={descriptionRef}
-                        />
-                        <div className={styles.actions}>
-                            <Button variant="contained" type="submit" >Modifier</Button>
-                            <Button variant="outlined" onClick={() => closeModal()}>Annuler</Button>
-                        </div>
-                    </form>         
+        <div className={styles.container}>
+            <form className={styles.form} onSubmit={(e:React.FormEvent) => changeData(e)}>
+                <div className={styles.image}>
+                    <label className={styles.label}>
+                        <input className={styles['image-input']} type="file" accept="image/png, image/jpeg" multiple={false} onChange={changeImage} ref={fileRef} />
+                        <Avatar alt={user.name} src={imageUrl} sx={{ width: 250, height: 250 }} />
+                    </label>
                 </div>
-            </ClickAwayListener>
+                <TextField
+                    id="name"
+                    label="Nom"
+                    placeholder="Votre nom"
+                    variant="standard"
+                    fullWidth
+                    inputRef={nameRef}
+                />
+                <TextField
+                    id="description"
+                    label="Description"
+                    placeholder="Un mot sur vous ?"
+                    multiline
+                    variant="standard"
+                    fullWidth
+                    inputRef={descriptionRef}
+                />
+                <div className={styles.actions}>
+                    <Button variant="contained" type="submit" >Modifier</Button>
+                    <Button variant="outlined" onClick={() => closeModal()}>Annuler</Button>
+                </div>
+            </form>         
         </div>
     )
 }
   
-export default EditProfileModal
+export default EditProfile
   
