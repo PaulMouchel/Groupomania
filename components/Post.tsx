@@ -131,6 +131,15 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
         updatePost(updatedPost)
     }
 
+    const updateComment = (updatedComment:CommentType) => {
+        const index:number = comments.findIndex(comment => comment.id === updatedComment.id)
+        const newComments = [...comments]
+        newComments[index] = updatedComment 
+        const updatedPost:PostType = {...data}
+        updatedPost.comments = [...newComments]
+        updatePost(updatedPost)
+    }
+
     const handleDotsMenuClose = () => {
         setAnchorEl(null)
     }
@@ -227,7 +236,7 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
                     <AccordionDetails>
                         <div className={styles.comments}>
                             { currentUser && comments.map((comment, index) => 
-                                <Comment key={index} data={comment} currentUser={currentUser} deleteSelf={deleteComment}/>
+                                <Comment key={index} data={comment} currentUser={currentUser} deleteSelf={deleteComment} updateSelf={updateComment}/>
                             )}
                         </div>
                     </AccordionDetails>

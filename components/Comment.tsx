@@ -10,13 +10,16 @@ import StyledMenu from "./StyledMenu"
 import EditIcon from '@mui/icons-material/Edit'
 import CommentType from "../types/CommentType"
 import IComment from '../interfaces/IComment'
+import Modal from './Modal'
+import EditComment from './EditComment'
 
 import api from '../api/axios'
 
-const Comment: FC<IComment> = ({ data, currentUser, deleteSelf }) => {
+const Comment: FC<IComment> = ({ data, currentUser, deleteSelf, updateSelf }) => {
 
     const { id, user, createdAt, text } = data
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+    const [ modalOpen, setModalOpen ] = useState<boolean>(false)
     const open = Boolean(anchorEl)
     const when = DateTime.fromISO(createdAt).setLocale('fr').toRelative()
 
@@ -46,8 +49,22 @@ const Comment: FC<IComment> = ({ data, currentUser, deleteSelf }) => {
         }
     }
 
+    const openModal = () => {
+        setAnchorEl(null)
+        setModalOpen(true)
+    }
+
+    const closeModal = () => {
+        setModalOpen(false)
+    }
+
     return (
         <div className={styles.container}>
+            { modalOpen && 
+                <Modal closeModal={closeModal}>
+                    <EditComment comment={data} closeModal={closeModal} updateSelf={updateSelf}/> 
+                </Modal>
+            }
             <div className={styles.main}>
                 <Link href={`/users/${user.id}`}>
                     <a>
@@ -82,9 +99,9 @@ const Comment: FC<IComment> = ({ data, currentUser, deleteSelf }) => {
                         open={open}
                         onClose={handleClose}
                     >
-                        <MenuItem disableRipple>
-                            <EditIcon />
-                            Modifier (en construction)
+                        <MenuItem  onClick={openModal} disableRipple>
+                            <EditIcon/>
+                            Modifier
                         </MenuItem>
                         <MenuItem onClick={handleDelete} disableRipple>
                             <DeleteIcon />
