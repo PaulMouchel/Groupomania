@@ -7,6 +7,7 @@ type UserType = {
     password: string
     description?: string
     imageUrl?: string
+    isAdmin: boolean
     createdAt: Date
     posts: PostType[]
 }

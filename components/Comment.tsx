@@ -85,7 +85,7 @@ const Comment: FC<IComment> = ({ data, currentUser, deleteSelf, updateSelf }) =>
                     </p>
                 </div>
             </div>
-            { currentUser.id === user.id && 
+            { ( currentUser.id === user.id || currentUser.isAdmin ) && 
                 <>
                     <div onClick={handleClick} className={styles.more}>
                         <MoreVertIcon/>

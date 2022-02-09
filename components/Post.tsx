@@ -201,7 +201,7 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
                     <div className={styles.when}>{when}</div>
                 </div>
                 </div>
-                { currentUser && currentUser.id === user.id && 
+                { currentUser && ( currentUser.id === user.id || currentUser.isAdmin ) && 
                     <>
                         <div onClick={handleDotsMenuClick} className={styles.more}>
                             <MoreVertIcon/>
