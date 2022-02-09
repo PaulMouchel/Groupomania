@@ -11,7 +11,7 @@ import Image from 'next/image'
 import PhotoCamera from '@mui/icons-material/PhotoCamera'
 import IconButton from '@mui/material/IconButton'
 
-const EditPost: FC<IEditPost> = ({ post, closeModal }) => {
+const EditPost: FC<IEditPost> = ({ post, closeModal, updateSelf }) => {
 
     const [ text , setText ] = useState<string>(post.text)
     const fileRef = useRef<HTMLInputElement>(null)
@@ -40,7 +40,7 @@ const EditPost: FC<IEditPost> = ({ post, closeModal }) => {
         const file = files && files[0]
         const newPost = new FormData()
         newPost.append("text", text)
-        newPost.append("image", file)
+        file && newPost.append("image", file)
         
         try {
             const response = await api.patch(`/posts/${postId}`, newPost, {
@@ -48,6 +48,7 @@ const EditPost: FC<IEditPost> = ({ post, closeModal }) => {
                     "authorization": localStorage.getItem("token") ||""
                 }
             })
+            updateSelf(response.data)
             // localStorage.setItem("user", JSON.stringify(response.data))
             // context?.setCurrentUser(response.data)
             closeModal()

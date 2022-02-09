@@ -182,7 +182,7 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
         <div className={styles.container}>
             { modalOpen && 
                 <Modal closeModal={closeModal}>
-                    <EditPost post={data} closeModal={closeModal}/>
+                    <EditPost post={data} closeModal={closeModal} updateSelf={updatePost}/>
                     {/* updateSelf={updateSelf}/>  */}
                 </Modal>
             }
