@@ -179,11 +179,10 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
     }
 
     return (
-        <div className={styles.container}>
+        <article className={styles.container}>
             { modalOpen && 
                 <Modal closeModal={closeModal}>
                     <EditPost post={data} closeModal={closeModal} updateSelf={updatePost}/>
-                    {/* updateSelf={updateSelf}/>  */}
                 </Modal>
             }
             <div className={styles.header}>
@@ -267,7 +266,7 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
             { currentUser &&
                 <WriteComment postId={id} writeComment={writeComment} currentUser={currentUser}/>
             }
-        </div>
+        </article>
     )
 }
 
