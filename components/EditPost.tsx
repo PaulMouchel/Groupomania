@@ -3,7 +3,7 @@ import styles from '../styles/components/EditPost.module.scss'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Avatar from '@mui/material/Avatar'
-import { useRef, useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent } from 'react'
 import api from '../api/axios'
 import IEditPost from '../interfaces/IEditPost'
 import { useCurrentUser } from './context/context'
@@ -14,7 +14,7 @@ import IconButton from '@mui/material/IconButton'
 const EditPost: FC<IEditPost> = ({ post, closeModal, updateSelf }) => {
 
     const [ text , setText ] = useState<string>(post.text)
-    const fileRef = useRef<HTMLInputElement>(null)
+    const [ file, setFile ] = useState<File>()
     const [ imageUrl, setImageUrl ] = useState<string>(post.imageUrl || "")
     const context = useCurrentUser()
     
@@ -28,6 +28,7 @@ const EditPost: FC<IEditPost> = ({ post, closeModal, updateSelf }) => {
             const selectedFile = files[0]
             const url = URL.createObjectURL(selectedFile);
             setImageUrl(url)
+            setFile(selectedFile)
         } else {
             setImageUrl("")
         }
@@ -35,28 +36,25 @@ const EditPost: FC<IEditPost> = ({ post, closeModal, updateSelf }) => {
 
     const changeData = async (e:React.FormEvent) => {
         e.preventDefault()
-        const postId = post.id
-        const files = fileRef?.current?.files || ""
-        const file = files && files[0]
-        const newPost = new FormData()
-        newPost.append("text", text)
-        file && newPost.append("image", file)
-        
-        try {
-            const response = await api.patch(`/posts/${postId}`, newPost, {
-                headers: {
-                    "authorization": localStorage.getItem("token") ||""
+        if (text !== "") {
+            const postId = post.id
+            const newPost = new FormData()
+            newPost.append("text", text)
+            file && newPost.append("image", file)
+            try {
+                const response = await api.patch(`/posts/${postId}`, newPost, {
+                    headers: {
+                        "authorization": localStorage.getItem("token") ||""
+                    }
+                })
+                updateSelf(response.data)
+                closeModal()
+            } catch (error:unknown) {
+                if (typeof error === "string") {
+                    console.log(`Error: ${error}`)
+                } else if (error instanceof Error) {
+                    console.log(`Error: ${(error as Error).message}`)
                 }
-            })
-            updateSelf(response.data)
-            // localStorage.setItem("user", JSON.stringify(response.data))
-            // context?.setCurrentUser(response.data)
-            closeModal()
-        } catch (error:unknown) {
-            if (typeof error === "string") {
-                console.log(`Error: ${error}`)
-            } else if (error instanceof Error) {
-                console.log(`Error: ${(error as Error).message}`)
             }
         }
     }
@@ -84,8 +82,8 @@ const EditPost: FC<IEditPost> = ({ post, closeModal, updateSelf }) => {
                     </div>
                 }
                 <div className={styles.actions}>
-                    <label htmlFor="icon-button-file">
-                        <input className={styles['upload-button']} accept="image/*" id="icon-button-file" type="file" onChange={changeImage}/>
+                    <label htmlFor="edit-post-file">
+                        <input className={styles['upload-button']} accept="image/*" id="edit-post-file" type="file" onChange={changeImage}/>
                         <IconButton color="primary" aria-label="upload picture" component="span" >
                             <PhotoCamera />
                         </IconButton>
