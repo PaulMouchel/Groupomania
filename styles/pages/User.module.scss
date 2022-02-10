@@ -2,8 +2,9 @@
 
 .container {
     background-color: rgba($color-secondary, 0.8);
-    padding-bottom: 2rem;
+    padding-top: 4rem;
     .main {   
+        padding: 2rem 0;
         &__content {
             border: solid 2px $color-primary;
             border-radius: 0.5rem;

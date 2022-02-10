@@ -9,8 +9,9 @@
     align-items: center;
     height: 4rem;
     padding: 1rem;
-    // position: fixed;
-    // width: 100%;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
     .logo {
         display: none;
         align-items: center;

@@ -1,8 +1,9 @@
 @import '../utils/variables';
 
 .container {
+    padding-top: 4rem;
     .main {
-        // background-color: $color-secondary, 0.5;
+        padding: 2rem 0;
         background-color: rgba($color-secondary, 0.8);
         &__content {
             max-width: 800px;
