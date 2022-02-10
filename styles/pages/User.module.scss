@@ -3,6 +3,7 @@
 .container {
     background-color: rgba($color-secondary, 0.8);
     padding-top: 4rem;
+    min-height: 100vh;
     .main {   
         padding: 2rem 0;
         &__content {

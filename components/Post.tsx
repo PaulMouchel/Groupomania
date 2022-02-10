@@ -1,30 +1,30 @@
-import { FC, useState } from "react"
-import styles from '../styles/components/Post.module.scss'
 import Image from 'next/image'
-import {DateTime} from "luxon"
-import Avatar from '@mui/material/Avatar'
 import Link from 'next/link'
-import Comment from "./Comment"
-import Accordion from '@mui/material/Accordion'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import Typography from '@mui/material/Typography'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import ThumbUpIcon from '@mui/icons-material/ThumbUp'
-import ThumbDownIcon from '@mui/icons-material/ThumbDown'
+import { FC, useState } from "react"
+import { DateTime } from "luxon"
 import api from '../api/axios'
+import styles from '../styles/components/Post.module.scss'
+import Comment from "./Comment"
+import EditPost from "./EditPost"
+import Modal from './Modal'
+import StyledMenu from "./StyledMenu"
+import WriteComment from "./WriteComment"
 import IPost from "../interfaces/IPost"
 import PostType from "../types/PostType"
 import CommentType from "../types/CommentType"
-import WriteComment from "./WriteComment"
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import MenuItem from '@mui/material/MenuItem'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import Avatar from '@mui/material/Avatar'
+import Chip from '@mui/material/Chip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import StyledMenu from "./StyledMenu"
-import Modal from './Modal'
-import EditPost from "./EditPost"
-import Chip from '@mui/material/Chip'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import MenuItem from '@mui/material/MenuItem'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import ThumbDownIcon from '@mui/icons-material/ThumbDown'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
+import Typography from '@mui/material/Typography'
 
 const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
 

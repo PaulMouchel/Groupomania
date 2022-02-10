@@ -101,7 +101,7 @@ const User: NextPage = () => {
                     
                             <div className={styles['tab-content']}>
                                 { context?.currentUser && tab === 0 && <UserActivities user={user} setUser={setUser} currentUser={context?.currentUser}/> }
-                                { tab === 0 && <UserSettings/> }
+                                { tab === 1 && <UserSettings user={user}/> }
                             </div>
                         </>
                     }
