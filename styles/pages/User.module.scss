@@ -1,7 +1,7 @@
 @import '../utils/variables';
 
 .container {
-    background-color: $color-secondary;
+    background-color: rgba($color-secondary, 0.8);
     padding-bottom: 2rem;
     .main {   
         &__content {

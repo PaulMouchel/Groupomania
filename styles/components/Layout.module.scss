@@ -1,0 +1,8 @@
+.bg {
+    z-index: 0;
+    position: relative;
+    .content {
+        z-index: 1;
+        position: relative;
+    }
+}
