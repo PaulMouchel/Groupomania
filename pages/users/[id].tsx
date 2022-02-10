@@ -14,6 +14,7 @@ import { useState, useEffect, useRef } from 'react'
 import Modal from '../../components/Modal'
 import EditProfile from "../../components/EditProfile"
 import { useCurrentUser } from "../../components/context/context"
+import Chip from '@mui/material/Chip'
 
 const User: NextPage = () => {
     const router = useRouter()
@@ -78,6 +79,7 @@ const User: NextPage = () => {
             <main className={styles.main}>
                 <div className={styles.main__content}>
                     <div className={styles.header}>
+                        { user && user.isAdmin && <Chip className={styles.admin} label="Admin" color="primary" /> }
                         <div className={styles.userpic}>
                             <Avatar alt={user ? user.name : "user pic"} src={user ? user.imageUrl : ""} sx={{ width: 250, height: 250 }} />
                         </div>

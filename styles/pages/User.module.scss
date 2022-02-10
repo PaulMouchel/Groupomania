@@ -13,10 +13,16 @@
             margin: auto;
             background-color: #FFF;
             .header {
+                position: relative;
                 display: flex;
                 align-items: center;
                 gap: 1rem;
                 padding: 2rem;
+                .admin {
+                    position: absolute;
+                    top: 1rem;
+                    right: 1rem;
+                }
                 .userpic {
                     border-radius: 99rem;
                     overflow: hidden;
