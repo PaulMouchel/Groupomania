@@ -1,20 +1,19 @@
 import { NextPage } from "next"
-import styles from '../../styles/pages/User.module.scss'
 import Head from 'next/head'
-import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { useState, useEffect, useRef } from 'react'
+import { useCurrentUser } from "../../components/context/context"
+import api from '../../api/axios'
+import styles from '../../styles/pages/User.module.scss'
 import UserActivities from "../../components/UserActivities"
 import UserSettings from "../../components/UserSettings"
-import { useRouter } from 'next/router'
-import UserType from "../../types/UserType"
-import api from '../../api/axios'
-import Avatar from '@mui/material/Avatar'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-import { useState, useEffect, useRef } from 'react'
 import Modal from '../../components/Modal'
 import EditProfile from "../../components/EditProfile"
-import { useCurrentUser } from "../../components/context/context"
+import UserType from "../../types/UserType"
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
 import Chip from '@mui/material/Chip'
+import Typography from '@mui/material/Typography'
 
 const User: NextPage = () => {
     const router = useRouter()

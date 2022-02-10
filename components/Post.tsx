@@ -24,6 +24,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import StyledMenu from "./StyledMenu"
 import Modal from './Modal'
 import EditPost from "./EditPost"
+import Chip from '@mui/material/Chip'
 
 const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
 
@@ -195,7 +196,9 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
                 <div>
                     <Link href={`/users/${user.id}`}>
                         <a>
-                            <div className={styles.sender}>{ user.name }</div>
+                            <div className={styles.sender}>
+                                { user.name } { user.isAdmin && <Chip className={styles.admin} label="Admin" color="primary" /> }
+                            </div>
                         </a>
                     </Link>
                     <div className={styles.when}>{when}</div>
