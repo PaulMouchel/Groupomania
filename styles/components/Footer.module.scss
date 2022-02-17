@@ -1,0 +1,40 @@
+@import '../utils/variables';
+
+.footer {
+    background-color: #111;
+    border-top: solid 2px #222;
+    padding: 2rem;
+    .date {
+        color: white;
+        text-align: center;
+        font-weight: bold;
+    }
+    .links {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        color: white;
+        a {
+            &:link {
+                color: white;
+            }
+            
+            &:visited {
+                color: white;
+            }
+            
+            &:focus {
+                color: white;
+            }
+            
+            &:hover {
+                color: $light-gray;
+            }
+            
+            &:active {
+                color: white;
+            }
+        }
+    }
+}
