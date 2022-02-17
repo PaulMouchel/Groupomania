@@ -79,7 +79,7 @@ const User: NextPage = () => {
                 <meta name="description" content="Groupomania propose à ces employés ce réseau social qui leur permet de faciliter les échanges et de partager les bons moments au sein de l'entreprise. Par cette démarche, Groupomania souhaite donner à ses employés un outil qu'ils aiment utiliser au quotidien et qui leur donne envie de poursuivre l'aventure Groupomania chaque jour" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            { isCurrentUser && context?.currentUser && modalOpen && 
+            { isCurrentUser && context?.currentUser && modalOpen &&
                 <Modal closeModal={closeModal}>
                     <EditProfile user={context?.currentUser} closeModal={closeModal} sendSnack={sendSnack}/> 
                 </Modal>
