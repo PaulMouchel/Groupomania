@@ -22,8 +22,9 @@ const DeleteProfile: FC<IDeleteProfile> = ({ user, closeModal }) => {
             if ( context?.currentUser?.id === user.id) {
                 localStorage.setItem("user", "")
                 context?.setCurrentUser(null)
+                router.push("/login")
             }
-            router.push("/login")
+            router.push("/")
         } catch (error:unknown) {
             if (typeof error === "string") {
                 console.log(`Error: ${error}`)
