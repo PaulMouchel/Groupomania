@@ -105,11 +105,11 @@ const User: NextPage = () => {
                             }
                             <div className={styles.tabs}>
                                 <div className={`${styles.tab} ${tab === 0 && styles.active}`} onClick={() => setTab(0)}>Activité</div>
-                                <div className={`${styles.tab} ${tab === 1 && styles.active}`} onClick={() => setTab(1)}>Paramètres</div>
+                                { context?.currentUser && ( context.currentUser.id === user.id || context.currentUser.isAdmin )  && <div className={`${styles.tab} ${tab === 1 && styles.active}`} onClick={() => setTab(1)}>Paramètres</div> }
                             </div>
                     
                             <div className={styles['tab-content']}>
-                                { context?.currentUser && tab === 0 && <UserActivities user={user} setUser={setUser} currentUser={context?.currentUser}/> }
+                                { context?.currentUser && tab === 0 && <UserActivities user={user} setUser={setUser} currentUser={context?.currentUser} sendSnack={sendSnack}/> }
                                 { tab === 1 && <UserSettings user={user}/> }
                             </div>
                         </>

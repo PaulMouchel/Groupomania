@@ -57,7 +57,6 @@ const Home: NextPage = () => {
         const index:number = newPosts.findIndex(existingPost => existingPost.id === post.id)
         newPosts[index] = post
         setPosts([...newPosts])
-        sendSnack("Le post a bien été modifé", "success")
     }
 
     const sendSnack = (message:string, severity:"error" | "warning" | "info" | "success") => {
@@ -77,7 +76,7 @@ const Home: NextPage = () => {
                 <div className={styles.main__content}>
                     <CreatePost posts={posts} setPosts={setPosts} currentUser={currentUser} sendSnack={sendSnack}/>
                     { posts.sort(sortPostsByDate).map((post, index) => 
-                        <Post key={JSON.stringify(post)} data={post} currentUser={currentUser} deletePost={deletePost} updatePost={updatePost}/>
+                        <Post key={JSON.stringify(post)} data={post} currentUser={currentUser} deletePost={deletePost} updatePost={updatePost} sendSnack={sendSnack}/>
                     )}
                 </div>
             </main>

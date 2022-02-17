@@ -6,7 +6,7 @@ import PostType from '../types/PostType'
 import UserType from '../types/UserType'
 import { Typography } from '@mui/material'
 
-const UserActivities: FC<IUserActivities> = ({ user, currentUser, setUser }) => {
+const UserActivities: FC<IUserActivities> = ({ user, currentUser, setUser, sendSnack }) => {
 
     const sortPostsByDate = (a:PostType, b:PostType) => {
         if (a.createdAt > b.createdAt)
@@ -36,7 +36,7 @@ const UserActivities: FC<IUserActivities> = ({ user, currentUser, setUser }) => 
         <div className={styles.container}>
             { user.posts.length ? 
                 user.posts.sort(sortPostsByDate).map((post, index) => 
-                    <Post key={index} data={post} currentUser={currentUser} deletePost={deletePost} updatePost={updatePost}/>
+                    <Post key={index} data={post} currentUser={currentUser} deletePost={deletePost} updatePost={updatePost} sendSnack={sendSnack}/>
                 ) : <Typography>Aucune activité pour le moment</Typography>}
         </div>
     )

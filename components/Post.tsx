@@ -26,7 +26,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import Typography from '@mui/material/Typography'
 
-const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
+const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost, sendSnack }) => {
 
     const { id, text, imageUrl, user, comments, reactions, createdAt } = data
     const quantityOfLikes = reactions.filter(reaction => reaction.type === 'like').length
@@ -126,6 +126,7 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
         const updatedPost:PostType = {...data}
         updatedPost.comments = [...newComments]
         updatePost(updatedPost)
+        sendSnack("Le commentaire a bien été supprimé", "success")
     }
 
     const writeComment = (comment:CommentType) => {
@@ -133,6 +134,7 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
         const updatedPost:PostType = {...data}
         updatedPost.comments = [...newComments]
         updatePost(updatedPost)
+        sendSnack("Le commentaire a bien été publié", "success")
     }
 
     const updateComment = (updatedComment:CommentType) => {
@@ -142,6 +144,7 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
         const updatedPost:PostType = {...data}
         updatedPost.comments = [...newComments]
         updatePost(updatedPost)
+        sendSnack("Le commentaire a bien été modifié", "success")
     }
 
     const handleDotsMenuClose = () => {
@@ -164,8 +167,10 @@ const Post: FC<IPost> = ({ data, currentUser, deletePost, updatePost }) => {
         } catch (error:unknown) {
             if (typeof error === "string") {
                 console.log(`Error: ${error}`)
+                sendSnack(`Error: ${error}`, "error")
             } else if (error instanceof Error) {
                 console.log(`Error: ${(error as Error).message}`)
+                sendSnack(`Error: ${(error as Error).message}`, "error")
             }
         }
     }

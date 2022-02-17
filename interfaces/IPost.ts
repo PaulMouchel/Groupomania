@@ -6,4 +6,5 @@ export default interface IPost {
     currentUser: UserType | null
     deletePost: Function
     updatePost: Function
+    sendSnack: Function
 }
