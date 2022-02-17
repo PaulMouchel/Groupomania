@@ -14,26 +14,26 @@
         display: flex;
         justify-content: center;
         gap: 1rem;
-        color: white;
+        color: $light-gray;
         a {
             &:link {
-                color: white;
-            }
-            
-            &:visited {
-                color: white;
-            }
-            
-            &:focus {
-                color: white;
-            }
-            
-            &:hover {
                 color: $light-gray;
             }
             
+            &:visited {
+                color: $light-gray;
+            }
+            
+            &:focus {
+                color: $light-gray;
+            }
+            
+            &:hover {
+                color: #FFF;
+            }
+            
             &:active {
-                color: white;
+                color: $light-gray;
             }
         }
     }
