@@ -1,11 +1,10 @@
 import { NextPage } from "next"
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState } from "react"
 import styles from '../styles/pages/login.module.scss'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import Alert from '@mui/material/Alert'
 import Image from 'next/image'
 import bg from '../public/images/login-bg.jpg'
 import icon from '../public/images/logos/icon-left-font-monochrome-black.svg'
@@ -13,6 +12,7 @@ import Typography from '@mui/material/Typography'
 import Link from 'next/link'
 import api from '../api/axios'
 import { useCurrentUser } from '../components/context/context'
+import SnackMessage from "../components/SnackMessage"
 
 const Login: NextPage = () => {
 
@@ -23,12 +23,6 @@ const Login: NextPage = () => {
     const [ emailHelper, setEmailHelper ] = useState<string>("")
     const [ error, setError ] = useState<string>("")
     const context = useCurrentUser()
-
-    useEffect(() => {
-        if (error) {
-            setTimeout(() => setError(""), 5000)
-        }
-    }, [error])
 
     const isValidEmail = (value:string) => {
         return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
@@ -97,12 +91,12 @@ const Login: NextPage = () => {
                     <TextField id="email" type="email" label="Email" variant="outlined" inputRef={emailRef} onChange={controlEmail} error={emailError} helperText={emailHelper}/>
                     <TextField id="password" type="password" label="Mot de passe" variant="outlined" inputRef={passwordRef}/>
                     <Button variant="contained" size="large" type="submit">Connexion</Button>
-                    { error ? <Alert severity="error">La connexion a échoué</Alert> : <div className={styles.space} /> }
                 </form>
                 <Typography>
                     Pas encore de compte ? <Link href='/signup'><a>Inscrivez-vous !</a></Link>
                 </Typography>
             </section>
+            <SnackMessage message={error && "La connexion a échoué"} setMessage={setError} severity="error"/>
         </main>
     )
 }
