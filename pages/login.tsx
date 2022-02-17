@@ -1,4 +1,5 @@
 import { NextPage } from "next"
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useRef, useState, useEffect } from "react"
 import styles from '../styles/pages/login.module.scss'
@@ -80,6 +81,11 @@ const Login: NextPage = () => {
 
     return (
         <main className={styles.main}>
+            <Head>
+                <title>Groupomania</title>
+                <meta name="description" content="Groupomania propose à ces employés ce réseau social qui leur permet de faciliter les échanges et de partager les bons moments au sein de l'entreprise. Par cette démarche, Groupomania souhaite donner à ses employés un outil qu'ils aiment utiliser au quotidien et qui leur donne envie de poursuivre l'aventure Groupomania chaque jour" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <Image src={bg} layout="fill" objectFit="cover"></Image>
             <a className={styles.credentials} href="https://www.pexels.com/fr-fr/photo/photo-de-personnes-faisant-des-coups-de-poing-3184430/">Photo de fauxels provenant de Pexels</a>
             <section className={styles.container}>

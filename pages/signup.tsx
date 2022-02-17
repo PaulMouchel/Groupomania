@@ -1,4 +1,5 @@
 import { NextPage } from "next"
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -154,6 +155,11 @@ const Signup: NextPage = () => {
 
     return (
         <main className={styles.main}>
+            <Head>
+                <title>Groupomania</title>
+                <meta name="description" content="Groupomania propose à ces employés ce réseau social qui leur permet de faciliter les échanges et de partager les bons moments au sein de l'entreprise. Par cette démarche, Groupomania souhaite donner à ses employés un outil qu'ils aiment utiliser au quotidien et qui leur donne envie de poursuivre l'aventure Groupomania chaque jour" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <Image src={bg} layout="fill" objectFit="cover"></Image>
             <a className={styles.credentials} href="https://www.pexels.com/fr-fr/photo/personne-mains-bureau-saisir-8867212/">Photo de Yan Krukov provenant de Pexels</a>
             <section className={styles.container}>
