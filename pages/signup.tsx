@@ -10,8 +10,7 @@ import Typography from '@mui/material/Typography'
 import styles from '../styles/pages/signup.module.scss'
 import bg from '../public/images/signup-bg.jpg'
 import icon from '../public/images/logos/icon-left-font-monochrome-black.svg'
-
-
+import SnackMessage from "../components/SnackMessage"
 import api from '../api/axios'
 import { useCurrentUser } from '../components/context/context'
 
@@ -142,13 +141,15 @@ const Signup: NextPage = () => {
                 logUser(email, password)
             } else {
                 console.log(response.data.error)
-                // setError(response.data.message)
+                setError(response.data.error)
             }
         } catch (error:unknown) {
             if (typeof error === "string") {
                 console.log(`Error: ${error}`)
+                setError(error)
             } else if (error instanceof Error) {
                 console.log(`Error: ${(error as Error).message}`)
+                setError(error.message)
             }
         }
     }
@@ -178,6 +179,7 @@ const Signup: NextPage = () => {
                     Vous avez déjà un compte ? <Link href='/login'><a>Connectez-vous !</a></Link>
                 </Typography>
             </section>
+            <SnackMessage message={error && "Echec de l'inscription"} setMessage={setError} severity="error"/>
         </main>
     )
 }
