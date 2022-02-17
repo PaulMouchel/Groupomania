@@ -6,4 +6,5 @@ export default interface ICreatePost {
     posts: PostType[]
     setPosts: Dispatch<SetStateAction<PostType[]>>
     currentUser: UserType | null
+    sendSnack: Function
 }

@@ -9,12 +9,15 @@ import { useState, useEffect } from 'react'
 import PostType from '../types/PostType'
 import UserType from '../types/UserType'
 import useLocalStorage from '../hooks/useLocalStorage'
+import SnackMessage from "../components/SnackMessage"
 
 const Home: NextPage = () => {
 
     const router = useRouter()
     const [ posts , setPosts ] = useState<PostType[]>([])
-    const [ currentUser , setCurrentUser ] = useLocalStorage<UserType | null>("user", null);
+    const [ currentUser , setCurrentUser ] = useLocalStorage<UserType | null>("user", null)
+    const [ snackMessage, setSnackMessage ] = useState<string>('')
+    const [ snackSeverity, setSnackSeverity ] = useState<"error" | "warning" | "info" | "success">("success")
 
     useEffect(() => {
         const fetchPosts = () => {
@@ -46,6 +49,7 @@ const Home: NextPage = () => {
     const deletePost = (postId: Number) => {
         const newPosts = posts.filter(post => post.id !== postId)
         setPosts([...newPosts])
+        sendSnack("Le post a bien été supprimé", "success")
     }
 
     const updatePost = (post:PostType) => {
@@ -53,9 +57,13 @@ const Home: NextPage = () => {
         const index:number = newPosts.findIndex(existingPost => existingPost.id === post.id)
         newPosts[index] = post
         setPosts([...newPosts])
+        sendSnack("Le post a bien été modifé", "success")
     }
 
-
+    const sendSnack = (message:string, severity:"error" | "warning" | "info" | "success") => {
+        setSnackSeverity(severity)
+        setSnackMessage(message)
+    }
 
     return (
         <div className={styles.container}>
@@ -67,12 +75,13 @@ const Home: NextPage = () => {
 
             <main className={styles.main}>
                 <div className={styles.main__content}>
-                    <CreatePost posts={posts} setPosts={setPosts} currentUser={currentUser}/>
+                    <CreatePost posts={posts} setPosts={setPosts} currentUser={currentUser} sendSnack={sendSnack}/>
                     { posts.sort(sortPostsByDate).map((post, index) => 
                         <Post key={JSON.stringify(post)} data={post} currentUser={currentUser} deletePost={deletePost} updatePost={updatePost}/>
                     )}
                 </div>
             </main>
+            <SnackMessage message={snackMessage} setMessage={setSnackMessage} severity={snackSeverity}/>
         </div>
     )
 }

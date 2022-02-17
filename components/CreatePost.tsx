@@ -9,7 +9,7 @@ import ICreatePost from "../interfaces/ICreatePost"
 import PhotoCamera from '@mui/icons-material/PhotoCamera'
 import IconButton from '@mui/material/IconButton'
 
-const CreatePost: FC<ICreatePost> = ({ posts, setPosts, currentUser }) => {
+const CreatePost: FC<ICreatePost> = ({ posts, setPosts, currentUser, sendSnack }) => {
 
     const [ text , setText ] = useState<string>("")
     const [ file, setFile ] = useState<File>()
@@ -52,12 +52,14 @@ const CreatePost: FC<ICreatePost> = ({ posts, setPosts, currentUser }) => {
                 setText("")
                 setFile(undefined)
                 setImageUrl("")
-
+                sendSnack("Le post a été créé avec succès", "success")
             } catch (error:unknown) {
                 if (typeof error === "string") {
                     console.log(`Error: ${error}`)
+                    sendSnack(`Error: ${error}`, "error")
                 } else if (error instanceof Error) {
                     console.log(`Error: ${(error as Error).message}`)
+                    sendSnack(`Error: ${(error as Error).message}`, "error")
                 }
             }
         }
