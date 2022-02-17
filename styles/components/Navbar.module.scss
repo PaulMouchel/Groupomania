@@ -32,7 +32,7 @@
         .home {
             color: #FFF;
             font-size: 1.5rem;
-            width: 5rem;
+            width: 3rem;
             height: 3rem;
             display: flex;
             justify-content: center;
@@ -58,6 +58,10 @@
             .username {
                 font-weight: 600;
                 padding: .75rem;
+                display: none;
+                @include large-phone {
+                    display: inline;
+                }
             }
             &:hover {
                 background-color: rgba(#FFF, 0.2);

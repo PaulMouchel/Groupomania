@@ -1,3 +1,9 @@
+@mixin large-phone {
+    @media screen and (min-width: map-get($breakpoints, large-phone)) {
+        @content;
+    }
+}
+
 @mixin tab {
     @media screen and (min-width: map-get($breakpoints, tab)) {
         @content;
