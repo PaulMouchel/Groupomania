@@ -92,7 +92,7 @@ const Login: NextPage = () => {
                     <TextField id="password" type="password" label="Mot de passe" variant="outlined" inputRef={passwordRef}/>
                     <Button variant="contained" size="large" type="submit">Connexion</Button>
                 </form>
-                <Typography>
+                <Typography className={styles.link}>
                     Pas encore de compte ? <Link href='/signup'><a>Inscrivez-vous !</a></Link>
                 </Typography>
             </section>

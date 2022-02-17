@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import styles from '../styles/components/EditProfile.module.scss'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import Avatar from '@mui/material/Avatar'
+import Image from 'next/image'
 import api from '../api/axios'
 import IEditProfile from '../interfaces/IEditProfile'
 import { useCurrentUser } from './context/context'
@@ -72,7 +72,7 @@ const EditProfile: FC<IEditProfile> = ({ user, closeModal, sendSnack }) => {
                 <div className={styles.image}>
                     <label className={styles.label}>
                         <input className={styles['image-input']} type="file" accept="image/png, image/jpeg" multiple={false} onChange={changeImage} ref={fileRef} />
-                        <Avatar alt={user.name} src={imageUrl} sx={{ width: 250, height: 250 }} />
+                        <Image alt={user.name} src={imageUrl} layout='fill' objectFit='cover'/>
                     </label>
                 </div>
                 <TextField

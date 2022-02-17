@@ -1,10 +1,13 @@
 @import '../utils/variables';
+@import '../utils/mixins';
 
 .container {
     background-color: #FFF;
     border: solid 2px $color-primary;
     border-radius: 0.5rem;
     padding: 1rem;
+    min-width: 300px;
+    max-width: 95vw;
     .form {
         display: flex;
         flex-direction: column;
@@ -12,11 +15,21 @@
         .image {
             display: flex;
             justify-content: center;
-            padding: 2rem;
+            padding: 1rem;
+            @include tab {
+                padding: 2rem;
+            }
             .label {
-                width: 250px;
-                height: 250px;
+                width: 150px;
+                height: 150px;
                 border-radius: 50%;
+                position: relative;
+                overflow: hidden;
+                border: solid 2px $dark-gray;
+                @include tab {
+                    width: 250px;
+                    height: 250px;
+                }
                 .image-input {
                     position: absolute;
                     width: 0;

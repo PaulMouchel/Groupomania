@@ -1,4 +1,5 @@
 @import '../utils/variables';
+@import '../utils/mixins';
 
 .container {
     background-color: rgba($color-secondary, 0.8);
@@ -16,9 +17,13 @@
             .header {
                 position: relative;
                 display: flex;
+                flex-direction: column;
                 align-items: center;
                 gap: 1rem;
                 padding: 2rem;
+                @include tab {
+                    flex-direction: row;
+                }
                 .admin {
                     position: absolute;
                     top: 1rem;
@@ -48,7 +53,10 @@
             }
             .tabs {
                 display: flex;
-                padding: 0 1rem;
+                
+                @include tab {
+                    padding: 0 1rem;
+                }
                 .tab {
                     padding: 1rem;
                     cursor: pointer;

@@ -174,7 +174,7 @@ const Signup: NextPage = () => {
                     <TextField id="password-confirmation" type="password" label="Confirmez le mot de passe" variant="outlined" inputRef={passwordConfirmationRef} onChange={controlPasswordConfirmation} error={passwordConfirmationError} helperText={passwordConfirmationHelper}/>
                     <Button variant="contained" size="large" type="submit">Inscription</Button>
                 </form>
-                <Typography>
+                <Typography className={styles.link}>
                     Vous avez déjà un compte ? <Link href='/login'><a>Connectez-vous !</a></Link>
                 </Typography>
             </section>
