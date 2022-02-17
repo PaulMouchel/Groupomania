@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { useRouter } from 'next/router'
 import styles from '../styles/components/DeleteProfile.module.scss'
 import Button from '@mui/material/Button'
 import api from '../api/axios'
@@ -7,7 +8,7 @@ import { useCurrentUser } from './context/context'
 import Typography from '@mui/material/Typography'
 
 const DeleteProfile: FC<IDeleteProfile> = ({ user, closeModal }) => {
-
+    const router = useRouter()
     const context = useCurrentUser()
 
     const deleteAccount = async (e:React.FormEvent) => {
@@ -22,7 +23,7 @@ const DeleteProfile: FC<IDeleteProfile> = ({ user, closeModal }) => {
                 localStorage.setItem("user", "")
                 context?.setCurrentUser(null)
             }
-            closeModal()
+            router.push("/login")
         } catch (error:unknown) {
             if (typeof error === "string") {
                 console.log(`Error: ${error}`)
