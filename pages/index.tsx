@@ -27,7 +27,6 @@ const Home: NextPage = () => {
                 }
             })
             .then((response) => {
-                console.log("reponse:", response)
                 setPosts(response.data)
             })
             .catch((error:unknown) => {

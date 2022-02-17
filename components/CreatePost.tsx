@@ -52,7 +52,7 @@ const CreatePost: FC<ICreatePost> = ({ posts, setPosts, currentUser, sendSnack }
                 setText("")
                 setFile(undefined)
                 setImageUrl("")
-                sendSnack("Le post a été créé avec succès", "success")
+                sendSnack("Le post a été publié avec succès", "success")
             } catch (error:unknown) {
                 if (typeof error === "string") {
                     console.log(`Error: ${error}`)
