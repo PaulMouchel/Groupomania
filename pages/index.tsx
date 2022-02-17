@@ -9,9 +9,11 @@ import { useState, useEffect } from 'react'
 import PostType from '../types/PostType'
 import UserType from '../types/UserType'
 import useLocalStorage from '../hooks/useLocalStorage'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
 
+    const router = useRouter()
     const [ posts , setPosts ] = useState<PostType[]>([])
     const [ currentUser , setCurrentUser ] = useLocalStorage<UserType | null>("user", null);
 
@@ -28,6 +30,7 @@ const Home: NextPage = () => {
             })
             .catch((error:unknown) => {
                 console.log(error)
+                router.push('/login')
             })
         }
         fetchPosts()

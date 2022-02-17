@@ -46,6 +46,7 @@ const User: NextPage = () => {
             })
             .catch((error:unknown) => {
                 console.log(error)
+                router.push("/login")
             })
         }
         fetchUser()
