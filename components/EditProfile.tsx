@@ -7,7 +7,7 @@ import api from '../api/axios'
 import IEditProfile from '../interfaces/IEditProfile'
 import { useCurrentUser } from './context/context'
 
-const EditProfile: FC<IEditProfile> = ({ user, closeModal }) => {
+const EditProfile: FC<IEditProfile> = ({ user, closeModal, sendSnack }) => {
 
     const descriptionRef = useRef<HTMLInputElement>(null)
     const nameRef = useRef<HTMLInputElement>(null)
@@ -53,12 +53,15 @@ const EditProfile: FC<IEditProfile> = ({ user, closeModal }) => {
             })
             localStorage.setItem("user", JSON.stringify(response.data))
             context?.setCurrentUser(response.data)
+            sendSnack("Informations modifiées avec succès", "success")
             closeModal()
         } catch (error:unknown) {
             if (typeof error === "string") {
                 console.log(`Error: ${error}`)
+                sendSnack(`Error: ${error}`, "error")
             } else if (error instanceof Error) {
                 console.log(`Error: ${(error as Error).message}`)
+                sendSnack(`Error: ${(error as Error).message}`, "error")
             }
         }
     }
@@ -93,7 +96,7 @@ const EditProfile: FC<IEditProfile> = ({ user, closeModal }) => {
                     <Button variant="contained" type="submit" >Modifier</Button>
                     <Button variant="outlined" onClick={() => closeModal()}>Annuler</Button>
                 </div>
-            </form>         
+            </form>      
         </div>
     )
 }

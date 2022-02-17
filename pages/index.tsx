@@ -73,8 +73,6 @@ const Home: NextPage = () => {
                     )}
                 </div>
             </main>
-
-
         </div>
     )
 }

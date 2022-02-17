@@ -14,6 +14,7 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
+import SnackMessage from "../../components/SnackMessage"
 
 const User: NextPage = () => {
     const router = useRouter()
@@ -26,6 +27,8 @@ const User: NextPage = () => {
     const [ isCurrentUser, setIsCurrentUser ] = useState<boolean>(false)
     const [ modalOpen, setModalOpen ] = useState<boolean>(false)
     const descriptionRef = useRef<HTMLInputElement>(null)
+    const [ snackMessage, setSnackMessage ] = useState<string>('')
+    const [ snackSeverity, setSnackSeverity ] = useState<"error" | "warning" | "info" | "success">("success")
 
     useEffect(() => {
         if(!isReady || modalOpen) {
@@ -64,6 +67,11 @@ const User: NextPage = () => {
         setModalOpen(false)
     }
 
+    const sendSnack = (message:string, severity:"error" | "warning" | "info" | "success") => {
+        setSnackSeverity(severity)
+        setSnackMessage(message)
+    }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -73,7 +81,7 @@ const User: NextPage = () => {
             </Head>
             { isCurrentUser && context?.currentUser && modalOpen && 
                 <Modal closeModal={closeModal}>
-                    <EditProfile user={context?.currentUser} closeModal={closeModal}/> 
+                    <EditProfile user={context?.currentUser} closeModal={closeModal} sendSnack={sendSnack}/> 
                 </Modal>
             }
             <main className={styles.main}>
@@ -108,8 +116,7 @@ const User: NextPage = () => {
                     }
                 </div>
             </main>
-
-
+            <SnackMessage message={snackMessage} setMessage={setSnackMessage} severity={snackSeverity}/>
         </div>
     )
 }
