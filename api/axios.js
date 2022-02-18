@@ -4,4 +4,4 @@ const api = axios.create({
     baseURL: process.env.AXIOS_BASE_URL
 })
 
-export default api
+export default api 
