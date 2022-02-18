@@ -5,6 +5,7 @@
     border: solid 2px $color-primary;
     border-radius: 0.5rem;
     padding: 1rem;
+    min-width: 50vw;
     .form {
         display: flex;
         flex-direction: column;
