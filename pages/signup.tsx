@@ -168,7 +168,7 @@ const Signup: NextPage = () => {
                     <div className={styles.logo}>
                         <Image  src={icon} width={300} height={80} />
                     </div>
-                    <h2>S'inscrire</h2>
+                    <h2>S&apos;inscrire</h2>
                     <TextField id="name" type="text" label="Nom d'utilisateur" variant="outlined" inputRef={nameRef} onChange={controlName} error={nameError} helperText={nameHelper}/>
                     <TextField id="email" type="email" label="Email" variant="outlined" autoComplete="email" inputRef={emailRef} onChange={controlEmail} error={emailError} helperText={emailHelper}/>
                     <TextField id="password" type="password" label="Mot de passe" variant="outlined" inputRef={passwordRef} onChange={controlPassword}  error={passwordError} helperText={passwordHelper}/>
