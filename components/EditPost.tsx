@@ -48,6 +48,7 @@ const EditPost: FC<IEditPost> = ({ post, closeModal, updateSelf }) => {
                     }
                 })
                 updateSelf(response.data)
+                closeModal()
             } catch (error:unknown) {
                 if (typeof error === "string") {
                     console.log(`Error: ${error}`)

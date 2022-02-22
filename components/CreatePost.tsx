@@ -68,7 +68,7 @@ const CreatePost: FC<ICreatePost> = ({ posts, setPosts, currentUser, sendSnack }
     return (
         <form className={styles.container} onSubmit={(e:React.FormEvent) => handleSubmit(e)}>
             <div className={styles.text}>
-                <Avatar alt="John Doe" src={currentUser ? currentUser.imageUrl : ""} sx={{ width: 56, height: 56 }}/>
+                <Avatar alt={currentUser?.name} src={currentUser ? currentUser.imageUrl : ""} sx={{ width: 56, height: 56 }}/>
                 <TextField
                     id="create-post"
                     label="Quelque chose à dire ?"
