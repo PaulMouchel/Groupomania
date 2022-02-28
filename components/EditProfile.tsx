@@ -6,6 +6,7 @@ import api from '../api/axios'
 import IEditProfile from '../interfaces/IEditProfile'
 import { useCurrentUser } from './context/context'
 import { Avatar } from '@mui/material'
+import Image from 'next/image'
 
 const EditProfile: FC<IEditProfile> = ({ user, closeModal, sendSnack }) => {
 
@@ -72,7 +73,11 @@ const EditProfile: FC<IEditProfile> = ({ user, closeModal, sendSnack }) => {
                 <div className={styles.image}>
                     <label className={styles.label}>
                         <input className={styles['image-input']} type="file" accept="image/png, image/jpeg" multiple={false} onChange={changeImage} ref={fileRef} />
-                        <Avatar src={imageUrl} sx={{ width: 150, height: 150 }}/>
+                        { imageUrl ?
+                            <Image src={imageUrl} layout='fill' objectFit='cover'/>
+                            :
+                            <Avatar src={imageUrl} sx={{ width: 150, height: 150 }}/>
+                        }
                     </label>
                 </div>
                 <TextField
