@@ -26,6 +26,20 @@ Pour démarrer ce projet en local, vous pouvez cloner le repository et exécuter
 	npm install
 	npm run dev
 
+Vous devez également ajouter à la racine du projet le fichier `.env.local` contenant les variables suivantes :
+
+URL de l'API backend en local :
+
+    NEXT_PUBLIC_AXIOS_BASE_URL=http://localhost:4200/api/
+
+Domaines d'origine des images :
+
+    IMAGES_DOMAIN=localhost
+    S3_IMAGES_DOMAIN_EU_WEST=************.s3.eu-west-3.amazonaws.com
+    S3_IMAGES_DOMAIN=************.s3.amazonaws.com
+
+(remplacer les * par le nom du projet)
+
 Vous pouvez aussi directement vous rendre sur :
 
 [groupomania-two.vercel.app](https://groupomania-two.vercel.app/)
