@@ -26,6 +26,10 @@
                 position: relative;
                 overflow: hidden;
                 border: solid 2px $dark-gray;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #bdbdbd;
                 @include tab {
                     width: 250px;
                     height: 250px;
